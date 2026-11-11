@@ -8,22 +8,24 @@ the film-look VFX are synthesised, and the films are assembled by scripts.
 
 | Film | Length | File | Notes |
 | --- | --- | --- | --- |
-| **EP 0 — THE DAY BEFORE** | 35 s | `render/mikay-ep0.mp4` | **animated**: the end of an ordinary day |
-| THE DAY BEFORE (v1) | 39 s | `render/mikay-day0.mp4` | still plates, superseded |
-| DAY 1: THEY'RE OUTSIDE | 43 s | `render/mikay-day1.mp4` | still plates |
+| **THE DAY BEFORE** | 41 s | `render/mikay-day0.mp4` | the last ordinary day |
+| DAY 1: THEY'RE OUTSIDE | 43 s | `render/mikay-day1.mp4` | the outbreak |
+| EP 0 — animated experiment | 35 s | `render/mikay-ep0.mp4` | rig-driven cut of the same story |
 
 All are 1920×1080, 24 fps, with narration, burned-in subtitles, a running timecode
 (top right), and a real 35 mm film emulation. **No background music** — narration and diegetic
 sound only.
 
-### EP 0 is animated
+### Subtitles
 
-There is a real 2-D rig behind the character (`tools/mikay_rig.py`): a skeleton of hips,
-knees, ankles, shoulders, elbows and hands, driven by pose functions — `pose_walk(phase)`,
-`pose_stretch(t)`, `pose_brush(t)`, `pose_sit()`, `pose_lie(t)` — plus per-frame breathing,
-blinks, mouth flaps and ponytail swing. `tools/animate.py` turns each narration line into a
-shot: it picks a 16:9 crop out of a background plate and draws the rig into it frame by
-frame. There are **no camera moves** and **no dissolves**; the motion is the character.
+The face is **Baloo 2 ExtraBold**, auto-fitted: each caption wraps to at most two lines and
+the type steps down until it fits the safe width, so nothing ever runs off the frame.
+
+### EP 0 (animation experiment)
+
+`tools/mikay_rig.py` + `tools/animate.py` add a pose-driven 2-D rig (walk cycles, blinks,
+mouth flaps, breathing) that can be composited into plate crops. It is kept in the repo as an
+experiment; the primary films still use the illustrated plates.
 
 ## Layout
 
@@ -43,9 +45,10 @@ render/            output
 ## Render
 
 ```bash
-./render.sh ep0          # effects -> mix -> animated picture (default)
-./render.sh ep0 video    # picture only
-./render.sh day0         # the older still-plate film
+./render.sh day0         # effects -> mix -> picture (default)
+./render.sh day0 video   # picture only
+./render.sh day1         # the outbreak film
+./render.sh ep0          # the animated experiment
 ```
 
 ## Guarantees the pipeline enforces

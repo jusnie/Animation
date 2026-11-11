@@ -1,5 +1,5 @@
 {
-  "total": 39.39,
+  "total": 40.89,
   "fps": 24,
   "frames": 982,
   "vfx": "grainlight 35mm port",
@@ -9,19 +9,14 @@
       "frame": "p1-morning.png",
       "audio": "d1.mp3",
       "text": "This is what a normal day looked like. I didn't know it yet.",
-      "start": 0.0,
+      "start": 1.5,
       "audio_dur": 3.19,
       "duration": 3.69,
       "subs": [
         {
-          "text": "This is what a normal day looked like.",
-          "start": 0.0,
-          "end": 2.0545762711864404
-        },
-        {
-          "text": "I didn't know it yet.",
-          "start": 2.0545762711864404,
-          "end": 3.19
+          "text": "This is what a normal day looked like. I didn't know it yet.",
+          "start": 1.5,
+          "end": 4.6899999999999995
         }
       ]
     },
@@ -30,19 +25,14 @@
       "frame": "p1b-alarm.png",
       "audio": "d2.mp3",
       "text": "My alarm went off at seven. I hit snooze twice, like always.",
-      "start": 3.69,
+      "start": 5.1899999999999995,
       "audio_dur": 4.47,
       "duration": 4.97,
       "subs": [
         {
-          "text": "My alarm went off at seven.",
-          "start": 3.69,
-          "end": 5.735593220338982
-        },
-        {
-          "text": "I hit snooze twice, like always.",
-          "start": 5.735593220338982,
-          "end": 8.16
+          "text": "My alarm went off at seven. I hit snooze twice, like always.",
+          "start": 5.1899999999999995,
+          "end": 9.66
         }
       ]
     },
@@ -51,14 +41,14 @@
       "frame": "p2-bathroom.png",
       "audio": "d3.mp3",
       "text": "I brushed my teeth in the same mirror, with the same face.",
-      "start": 8.66,
+      "start": 10.16,
       "audio_dur": 3.19,
       "duration": 3.69,
       "subs": [
         {
-          "text": "I brushed my teeth in the same mirror, with\nthe same face.",
-          "start": 8.66,
-          "end": 11.85
+          "text": "I brushed my teeth in the same mirror, with the same face.",
+          "start": 10.16,
+          "end": 13.35
         }
       ]
     },
@@ -67,19 +57,14 @@
       "frame": "p3-street.png",
       "audio": "d4.mp3",
       "text": "Walked to the bus stop past the same houses. The same cat sat on the same fence.",
-      "start": 12.35,
+      "start": 13.85,
       "audio_dur": 5.11,
       "duration": 5.61,
       "subs": [
         {
-          "text": "Walked to the bus stop past the same\nhouses.",
-          "start": 12.35,
-          "end": 15.196075949367088
-        },
-        {
-          "text": "The same cat sat on the same fence.",
-          "start": 15.196075949367088,
-          "end": 17.46
+          "text": "Walked to the bus stop past the same houses. The same cat sat on the same fence.",
+          "start": 13.85,
+          "end": 18.96
         }
       ]
     },
@@ -88,24 +73,14 @@
       "frame": "p4-tv.png",
       "audio": "d5.mp3",
       "text": "Afternoon cartoons. Then the news said a city name I had never heard of. I changed the channel.",
-      "start": 17.96,
+      "start": 19.46,
       "audio_dur": 5.75,
       "duration": 6.25,
       "subs": [
         {
-          "text": "Afternoon cartoons.",
-          "start": 17.96,
-          "end": 19.1347311827957
-        },
-        {
-          "text": "Then the news said a city name I had never\nheard of.",
-          "start": 19.1347311827957,
-          "end": 22.34978494623656
-        },
-        {
-          "text": "I changed the channel.",
-          "start": 22.34978494623656,
-          "end": 23.71
+          "text": "Afternoon cartoons. Then the news said a city name I had never heard of. I changed the channel.",
+          "start": 19.46,
+          "end": 25.21
         }
       ]
     },
@@ -114,19 +89,14 @@
       "frame": "p5-porch.png",
       "audio": "d7.mp3",
       "text": "I sat on the porch until the streetlights came on. It was the best day I ever had.",
-      "start": 24.21,
+      "start": 25.71,
       "audio_dur": 4.79,
       "duration": 5.29,
       "subs": [
         {
-          "text": "I sat on the porch until the streetlights came\non.",
-          "start": 24.21,
-          "end": 27.166790123456792
-        },
-        {
-          "text": "It was the best day I ever had.",
-          "start": 27.166790123456792,
-          "end": 29.0
+          "text": "I sat on the porch until the streetlights came on. It was the best day I ever had.",
+          "start": 25.71,
+          "end": 30.5
         }
       ]
     },
@@ -135,24 +105,14 @@
       "frame": "p6-night.png",
       "audio": "d6.mp3",
       "text": "That night I left my window open. Someone was standing under the streetlight. I figured they were waiting for a friend.",
-      "start": 29.5,
+      "start": 31.0,
       "audio_dur": 6.39,
       "duration": 6.89,
       "subs": [
         {
-          "text": "That night I left my window open.",
-          "start": 29.5,
-          "end": 31.302307692307693
-        },
-        {
-          "text": "Someone was standing under the\nstreetlight.",
-          "start": 31.302307692307693,
-          "end": 33.65076923076923
-        },
-        {
-          "text": "I figured they were waiting for a friend.",
-          "start": 33.65076923076923,
-          "end": 35.89
+          "text": "That night I left my window open. Someone was standing under the streetlight. I figured they were waiting for a friend.",
+          "start": 31.0,
+          "end": 37.39
         }
       ]
     }

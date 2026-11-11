@@ -1,191 +1,191 @@
 {
   "film": "day0",
-  "total": 39.39,
+  "total": 40.89,
   "voice": [
     {
       "id": "d1",
-      "start": 0.0,
-      "end": 3.19
+      "start": 1.5,
+      "end": 4.69
     },
     {
       "id": "d2",
-      "start": 3.69,
-      "end": 8.16
+      "start": 5.19,
+      "end": 9.66
     },
     {
       "id": "d3",
-      "start": 8.66,
-      "end": 11.85
+      "start": 10.16,
+      "end": 13.35
     },
     {
       "id": "d4",
-      "start": 12.35,
-      "end": 17.46
+      "start": 13.85,
+      "end": 18.96
     },
     {
       "id": "d5",
-      "start": 17.96,
-      "end": 23.71
+      "start": 19.46,
+      "end": 25.21
     },
     {
       "id": "d6",
-      "start": 24.21,
-      "end": 29.0
+      "start": 25.71,
+      "end": 30.5
     },
     {
       "id": "d7",
-      "start": 29.5,
-      "end": 35.89
+      "start": 31.0,
+      "end": 37.39
     }
   ],
   "sfx": [
     {
       "cue": "alarm",
-      "at": 0.1,
+      "at": 1.6,
       "gain": 0.55,
       "note": "the alarm clock is ringing"
     },
     {
       "cue": "birds",
-      "at": 0.3,
+      "at": 1.8,
       "gain": 0.5,
       "note": "birdsong through the window"
     },
     {
       "cue": "cloth",
-      "at": 4.04,
+      "at": 5.54,
       "gain": 0.45,
       "note": "snooze: she rolls over"
     },
     {
       "cue": "alarm",
-      "at": 4.54,
+      "at": 6.04,
       "gain": 0.3,
       "note": "the ringing continues, muffled"
     },
     {
       "cue": "cloth",
-      "at": 5.54,
+      "at": 7.04,
       "gain": 0.35,
       "note": "blanket thrown back"
     },
     {
       "cue": "tap",
-      "at": 8.76,
+      "at": 10.26,
       "gain": 0.55,
       "note": "the tap running"
     },
     {
       "cue": "brush",
-      "at": 9.21,
+      "at": 10.71,
       "gain": 0.45,
       "note": "toothbrush"
     },
     {
       "cue": "tap",
-      "at": 10.51,
+      "at": 12.01,
       "gain": 0.35,
       "note": "tap off, water draining"
     },
     {
       "cue": "steps",
-      "at": 12.55,
+      "at": 14.05,
       "gain": 0.55,
       "note": "sneakers on the sidewalk"
     },
     {
       "cue": "birds",
-      "at": 12.85,
+      "at": 14.35,
       "gain": 0.45,
       "note": "morning birds"
     },
     {
       "cue": "sprinkler",
-      "at": 14.65,
+      "at": 16.15,
       "gain": 0.4,
       "note": "a lawn sprinkler"
     },
     {
       "cue": "dog",
-      "at": 15.75,
+      "at": 17.25,
       "gain": 0.4,
       "note": "a dog behind a fence"
     },
     {
       "cue": "tvnews",
-      "at": 18.21,
+      "at": 19.71,
       "gain": 0.55,
       "note": "the television: news broadcast"
     },
     {
       "cue": "spoon",
-      "at": 19.51,
+      "at": 21.01,
       "gain": 0.4,
       "note": "cereal"
     },
     {
       "cue": "bowl",
-      "at": 20.76,
+      "at": 22.26,
       "gain": 0.3,
       "note": "bowl set down"
     },
     {
       "cue": "tvnews",
-      "at": 22.06,
+      "at": 23.56,
       "gain": 0.3,
       "note": "she changes the channel"
     },
     {
       "cue": "phone",
-      "at": 7.96,
+      "at": 9.46,
       "gain": 0.55,
       "note": "her phone buzzes, ignored"
     },
     {
       "cue": "phone",
-      "at": 11.96,
+      "at": 13.46,
       "gain": 0.45,
       "note": "a second buzz, ignored"
     },
     {
       "cue": "birds",
-      "at": 24.41,
+      "at": 25.91,
       "gain": 0.4,
       "note": "evening birds"
     },
     {
       "cue": "cloth",
-      "at": 26.51,
+      "at": 28.01,
       "gain": 0.25,
       "note": "she stands, stretches"
     },
     {
       "cue": "steps",
-      "at": 27.31,
+      "at": 28.81,
       "gain": 0.4,
       "note": "boots on the porch boards"
     },
     {
       "cue": "crickets",
-      "at": 29.7,
+      "at": 31.2,
       "gain": 0.55,
       "note": "crickets"
     },
     {
       "cue": "room",
-      "at": 29.7,
+      "at": 31.2,
       "gain": 0.45,
       "note": "the house settling"
     },
     {
       "cue": "phone",
-      "at": 32.6,
+      "at": 34.1,
       "gain": 0.35,
       "note": "a notification on the nightstand"
     },
     {
       "cue": "boom",
-      "at": 29.6,
+      "at": 31.1,
       "gain": 0.3,
       "note": "a submarine swell under the last line"
     }

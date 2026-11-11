@@ -33,6 +33,7 @@ DAY0 = dict(
     title_big="THE DAY BEFORE",
     end_card=dict(big="DAY 1.", small="THEY'RE OUTSIDE."),
     end_hold=3.0,
+    lead_in=1.5,
     # (id, frame, audio, spoken text == subtitle text)
     narration=[
         dict(id="d1", frame="p1-morning.png", audio="d1.mp3",
@@ -65,6 +66,7 @@ DAY1 = dict(
     title_big="DAY 1",
     end_card=dict(big="DAY 4.", small="THEY WEREN'T TRYING TO GET IN."),
     end_hold=2.6,
+    lead_in=1.5,
     narration=[
         dict(id="n1", frame="f1-hook.png", audio="n1.mp3",
              text="Day one. I did everything right."),
@@ -116,7 +118,7 @@ EP0 = dict(
 )
 
 FILMS = {"day0": DAY0, "day1": DAY1, "ep0": EP0}
-DEFAULT_FILM = "ep0"
+DEFAULT_FILM = "day0"
 
 
 def film(key=None):

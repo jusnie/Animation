@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Render pipeline for the MIKAY films.
-#   ./render.sh                  the animated episode (ep0)
-#   ./render.sh ep0               one film (ep0 | day0 | day1)
+#   ./render.sh                  THE DAY BEFORE (day0)
+#   ./render.sh day1             one film (day0 | day1 | ep0)
 #   ./render.sh day0 video       picture only (audio mix already exists)
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -13,7 +13,7 @@ if [ ! -x "$PY" ]; then
   .venv/bin/pip install --quiet imageio-ffmpeg numpy scipy pillow fonttools brotli
 fi
 
-FILM="${1:-ep0}"
+FILM="${1:-day0}"
 MODE="${2:-all}"
 
 if [ "$MODE" != "video" ]; then
