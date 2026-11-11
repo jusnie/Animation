@@ -1,0 +1,149 @@
+{
+  "total": 42.660000000000004,
+  "fps": 24,
+  "frames": 1059,
+  "vfx": "grainlight 35mm port",
+  "segments": [
+    {
+      "id": "n1",
+      "frame": "f1-hook.png",
+      "audio": "n1.mp3",
+      "text": "Day one. I did everything right.",
+      "start": 0.0,
+      "audio_dur": 2.55,
+      "duration": 3.05,
+      "subs": [
+        {
+          "text": "Day one.\nI did everything right.",
+          "start": 0.0,
+          "end": 2.55
+        }
+      ]
+    },
+    {
+      "id": "n2",
+      "frame": "f2-setup.png",
+      "audio": "n2.mp3",
+      "text": "I nailed boards over the front door and told myself they would hold. Then I looked through the window. There were so many of them.",
+      "start": 3.05,
+      "audio_dur": 6.71,
+      "duration": 7.21,
+      "subs": [
+        {
+          "text": "I nailed boards over the front door and told\nmyself they would hold.",
+          "start": 3.05,
+          "end": 6.6146875
+        },
+        {
+          "text": "Then I looked through the window.",
+          "start": 6.6146875,
+          "end": 8.344609375
+        },
+        {
+          "text": "There were so many of them.",
+          "start": 8.344609375,
+          "end": 9.76
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "frame": "f3-false-safe.png",
+      "audio": "n3.mp3",
+      "text": "Day two, they were still there. Day three... they still hadn't moved. So I got comfortable. I stopped sleeping behind the barricade. That was my mistake.",
+      "start": 10.26,
+      "audio_dur": 10.23,
+      "duration": 10.73,
+      "subs": [
+        {
+          "text": "Day two, they were still there.",
+          "start": 10.26,
+          "end": 12.388389261744965
+        },
+        {
+          "text": "Day three... they still hadn't moved.",
+          "start": 12.388389261744965,
+          "end": 14.928724832214764
+        },
+        {
+          "text": "So I got comfortable.",
+          "start": 14.928724832214764,
+          "end": 16.370536912751675
+        },
+        {
+          "text": "I stopped sleeping behind the barricade.",
+          "start": 16.370536912751675,
+          "end": 19.11684563758389
+        },
+        {
+          "text": "That was my mistake.",
+          "start": 19.11684563758389,
+          "end": 20.490000000000002
+        }
+      ]
+    },
+    {
+      "id": "n4",
+      "frame": "f4-wrongness.png",
+      "audio": "n4.mp3",
+      "text": "Because they weren't trying to get in. They were looking at me the way you look at someone who doesn't know yet.",
+      "start": 20.990000000000002,
+      "audio_dur": 5.43,
+      "duration": 5.93,
+      "subs": [
+        {
+          "text": "Because they weren't trying to get in.",
+          "start": 20.990000000000002,
+          "end": 22.84891891891892
+        },
+        {
+          "text": "They were looking at me the way you look at\nsomeone who doesn't know yet.",
+          "start": 22.84891891891892,
+          "end": 26.42
+        }
+      ]
+    },
+    {
+      "id": "n5",
+      "frame": "f5-turn.png",
+      "audio": "n5.mp3",
+      "text": "Then one of them pressed its hand against the glass... and pointed up. I had been sleeping under that hatch for three days.",
+      "start": 26.92,
+      "audio_dur": 7.35,
+      "duration": 7.85,
+      "subs": [
+        {
+          "text": "Then one of them pressed its hand against\nthe glass... and pointed up.",
+          "start": 26.92,
+          "end": 31.1372131147541
+        },
+        {
+          "text": "I had been sleeping under that hatch for\nthree days.",
+          "start": 31.1372131147541,
+          "end": 34.27
+        }
+      ]
+    },
+    {
+      "id": "n6",
+      "frame": "f6-button.png",
+      "audio": "n6.mp3",
+      "text": "So I did the only thing left. I opened the door. And they stepped aside.",
+      "start": 34.77,
+      "audio_dur": 4.79,
+      "duration": 5.29,
+      "subs": [
+        {
+          "text": "So I did the only thing left.\nI opened the door.",
+          "start": 34.77,
+          "end": 38.008309859154934
+        },
+        {
+          "text": "And they stepped aside.",
+          "start": 38.008309859154934,
+          "end": 39.56
+        }
+      ]
+    }
+  ]
+}

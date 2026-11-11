@@ -1,0 +1,39 @@
+1
+00:00:01,500 --> 00:00:03,410
+This is what a normal day looked like.
+
+2
+00:00:03,910 --> 00:00:05,500
+I didn't know it yet.
+
+3
+00:00:06,000 --> 00:00:09,190
+My alarm went off at seven, and I hit snooze twice.
+
+4
+00:00:09,690 --> 00:00:12,880
+I brushed my teeth in the same mirror, with the same face.
+
+5
+00:00:13,380 --> 00:00:16,250
+I walked to the bus stop past the same houses.
+
+6
+00:00:16,750 --> 00:00:18,980
+The same cat was on the same fence.
+
+7
+00:00:19,480 --> 00:00:22,990
+Afternoon cartoons, and a city name I had never heard of.
+
+8
+00:00:23,490 --> 00:00:24,760
+I changed the channel.
+
+9
+00:00:25,260 --> 00:00:27,490
+That night I left my window open.
+
+10
+00:00:27,990 --> 00:00:31,500
+Someone was standing under the streetlight, waiting for a friend.

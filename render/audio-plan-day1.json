@@ -1,0 +1,264 @@
+{
+  "film": "day1",
+  "total": 42.66,
+  "voice": [
+    {
+      "id": "n1",
+      "start": 0.0,
+      "end": 2.55
+    },
+    {
+      "id": "n2",
+      "start": 3.05,
+      "end": 9.76
+    },
+    {
+      "id": "n3",
+      "start": 10.26,
+      "end": 20.49
+    },
+    {
+      "id": "n4",
+      "start": 20.99,
+      "end": 26.42
+    },
+    {
+      "id": "n5",
+      "start": 26.92,
+      "end": 34.27
+    },
+    {
+      "id": "n6",
+      "start": 34.77,
+      "end": 39.56
+    }
+  ],
+  "sfx": [
+    {
+      "cue": "bang",
+      "at": 0.04,
+      "gain": 0.95,
+      "note": "palm slams the door on the hook"
+    },
+    {
+      "cue": "wind",
+      "at": 0.6,
+      "gain": 0.35,
+      "note": "cold night air bed"
+    },
+    {
+      "cue": "bang_soft",
+      "at": 1.85,
+      "gain": 0.45,
+      "note": "second, weaker hit"
+    },
+    {
+      "cue": "breath",
+      "at": 2.35,
+      "gain": 0.55,
+      "note": "her breath catches"
+    },
+    {
+      "cue": "hammer",
+      "at": 3.3,
+      "gain": 1.0,
+      "note": "first nail"
+    },
+    {
+      "cue": "hammer",
+      "at": 3.83,
+      "gain": 0.9,
+      "note": "second nail"
+    },
+    {
+      "cue": "hammer",
+      "at": 4.36,
+      "gain": 1.0,
+      "note": "third nail"
+    },
+    {
+      "cue": "hammer",
+      "at": 4.77,
+      "gain": 0.75,
+      "note": "fourth nail"
+    },
+    {
+      "cue": "creak",
+      "at": 5.6,
+      "gain": 0.4,
+      "note": "board flexing"
+    },
+    {
+      "cue": "horde",
+      "at": 6.35,
+      "gain": 0.55,
+      "note": "she looks through the window"
+    },
+    {
+      "cue": "moan1",
+      "at": 8.15,
+      "gain": 0.5,
+      "note": "a zombie answers"
+    },
+    {
+      "cue": "glass_ting",
+      "at": 8.4,
+      "gain": 0.35,
+      "note": "ring of the pane"
+    },
+    {
+      "cue": "spoon",
+      "at": 10.56,
+      "gain": 0.45,
+      "note": "spoon on the bowl"
+    },
+    {
+      "cue": "bowl",
+      "at": 11.11,
+      "gain": 0.35,
+      "note": "bowl set down"
+    },
+    {
+      "cue": "tv",
+      "at": 11.56,
+      "gain": 0.3,
+      "note": "television idling in the corner"
+    },
+    {
+      "cue": "spoon",
+      "at": 13.36,
+      "gain": 0.4,
+      "note": "another spoonful"
+    },
+    {
+      "cue": "bang_soft",
+      "at": 14.86,
+      "gain": 0.32,
+      "note": "distant knock, ignored"
+    },
+    {
+      "cue": "scratch",
+      "at": 16.31,
+      "gain": 0.25,
+      "note": "fingernails on the far door"
+    },
+    {
+      "cue": "bowl",
+      "at": 17.66,
+      "gain": 0.28,
+      "note": "bowl down"
+    },
+    {
+      "cue": "heartbeat",
+      "at": 19.01,
+      "gain": 0.55,
+      "note": "she realises"
+    },
+    {
+      "cue": "creak",
+      "at": 20.16,
+      "gain": 0.3,
+      "note": "house settling"
+    },
+    {
+      "cue": "moan2",
+      "at": 21.54,
+      "gain": 0.45,
+      "note": "close, quiet moan"
+    },
+    {
+      "cue": "heartbeat",
+      "at": 22.59,
+      "gain": 0.5,
+      "note": "her pulse"
+    },
+    {
+      "cue": "scratch",
+      "at": 24.04,
+      "gain": 0.3,
+      "note": "hand dragging on glass"
+    },
+    {
+      "cue": "moan3",
+      "at": 24.89,
+      "gain": 0.38,
+      "note": "another one joins"
+    },
+    {
+      "cue": "glass_ting",
+      "at": 25.61,
+      "gain": 0.22,
+      "note": "fingertip tap"
+    },
+    {
+      "cue": "scratch",
+      "at": 27.2,
+      "gain": 0.42,
+      "note": "hand pressed on the glass"
+    },
+    {
+      "cue": "glass_ting",
+      "at": 27.87,
+      "gain": 0.3,
+      "note": "tap"
+    },
+    {
+      "cue": "riser",
+      "at": 28.77,
+      "gain": 0.55,
+      "note": "it points up"
+    },
+    {
+      "cue": "creak",
+      "at": 29.97,
+      "gain": 0.65,
+      "note": "the attic hatch"
+    },
+    {
+      "cue": "whoosh",
+      "at": 30.47,
+      "gain": 0.35,
+      "note": "dust falling"
+    },
+    {
+      "cue": "heartbeat",
+      "at": 32.02,
+      "gain": 0.6,
+      "note": "she understands"
+    },
+    {
+      "cue": "breath",
+      "at": 33.02,
+      "gain": 0.5,
+      "note": "sharp intake"
+    },
+    {
+      "cue": "door_open",
+      "at": 34.87,
+      "gain": 0.75,
+      "note": "bolt, hinge, air"
+    },
+    {
+      "cue": "wind",
+      "at": 35.47,
+      "gain": 0.55,
+      "note": "night air through the open door"
+    },
+    {
+      "cue": "boom",
+      "at": 36.32,
+      "gain": 0.65,
+      "note": "the horde shifts to let her through"
+    },
+    {
+      "cue": "horde",
+      "at": 36.67,
+      "gain": 0.45,
+      "note": "the horde, quiet"
+    }
+  ],
+  "ducking": {
+    "ducked_to_db": -6.0,
+    "release_ms": 250
+  }
+}

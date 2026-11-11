@@ -1,0 +1,197 @@
+{
+  "film": "day0",
+  "total": 39.39,
+  "voice": [
+    {
+      "id": "d1",
+      "start": 0.0,
+      "end": 3.19
+    },
+    {
+      "id": "d2",
+      "start": 3.69,
+      "end": 8.16
+    },
+    {
+      "id": "d3",
+      "start": 8.66,
+      "end": 11.85
+    },
+    {
+      "id": "d4",
+      "start": 12.35,
+      "end": 17.46
+    },
+    {
+      "id": "d5",
+      "start": 17.96,
+      "end": 23.71
+    },
+    {
+      "id": "d6",
+      "start": 24.21,
+      "end": 29.0
+    },
+    {
+      "id": "d7",
+      "start": 29.5,
+      "end": 35.89
+    }
+  ],
+  "sfx": [
+    {
+      "cue": "alarm",
+      "at": 0.1,
+      "gain": 0.55,
+      "note": "the alarm clock is ringing"
+    },
+    {
+      "cue": "birds",
+      "at": 0.3,
+      "gain": 0.5,
+      "note": "birdsong through the window"
+    },
+    {
+      "cue": "cloth",
+      "at": 4.04,
+      "gain": 0.45,
+      "note": "snooze: she rolls over"
+    },
+    {
+      "cue": "alarm",
+      "at": 4.54,
+      "gain": 0.3,
+      "note": "the ringing continues, muffled"
+    },
+    {
+      "cue": "cloth",
+      "at": 5.54,
+      "gain": 0.35,
+      "note": "blanket thrown back"
+    },
+    {
+      "cue": "tap",
+      "at": 8.76,
+      "gain": 0.55,
+      "note": "the tap running"
+    },
+    {
+      "cue": "brush",
+      "at": 9.21,
+      "gain": 0.45,
+      "note": "toothbrush"
+    },
+    {
+      "cue": "tap",
+      "at": 10.51,
+      "gain": 0.35,
+      "note": "tap off, water draining"
+    },
+    {
+      "cue": "steps",
+      "at": 12.55,
+      "gain": 0.55,
+      "note": "sneakers on the sidewalk"
+    },
+    {
+      "cue": "birds",
+      "at": 12.85,
+      "gain": 0.45,
+      "note": "morning birds"
+    },
+    {
+      "cue": "sprinkler",
+      "at": 14.65,
+      "gain": 0.4,
+      "note": "a lawn sprinkler"
+    },
+    {
+      "cue": "dog",
+      "at": 15.75,
+      "gain": 0.4,
+      "note": "a dog behind a fence"
+    },
+    {
+      "cue": "tvnews",
+      "at": 18.21,
+      "gain": 0.55,
+      "note": "the television: news broadcast"
+    },
+    {
+      "cue": "spoon",
+      "at": 19.51,
+      "gain": 0.4,
+      "note": "cereal"
+    },
+    {
+      "cue": "bowl",
+      "at": 20.76,
+      "gain": 0.3,
+      "note": "bowl set down"
+    },
+    {
+      "cue": "tvnews",
+      "at": 22.06,
+      "gain": 0.3,
+      "note": "she changes the channel"
+    },
+    {
+      "cue": "phone",
+      "at": 7.96,
+      "gain": 0.55,
+      "note": "her phone buzzes, ignored"
+    },
+    {
+      "cue": "phone",
+      "at": 11.96,
+      "gain": 0.45,
+      "note": "a second buzz, ignored"
+    },
+    {
+      "cue": "birds",
+      "at": 24.41,
+      "gain": 0.4,
+      "note": "evening birds"
+    },
+    {
+      "cue": "cloth",
+      "at": 26.51,
+      "gain": 0.25,
+      "note": "she stands, stretches"
+    },
+    {
+      "cue": "steps",
+      "at": 27.31,
+      "gain": 0.4,
+      "note": "boots on the porch boards"
+    },
+    {
+      "cue": "crickets",
+      "at": 29.7,
+      "gain": 0.55,
+      "note": "crickets"
+    },
+    {
+      "cue": "room",
+      "at": 29.7,
+      "gain": 0.45,
+      "note": "the house settling"
+    },
+    {
+      "cue": "phone",
+      "at": 32.6,
+      "gain": 0.35,
+      "note": "a notification on the nightstand"
+    },
+    {
+      "cue": "boom",
+      "at": 29.6,
+      "gain": 0.3,
+      "note": "a submarine swell under the last line"
+    }
+  ],
+  "ducking": {
+    "ducked_to_db": -6.0,
+    "release_ms": 250
+  }
+}
