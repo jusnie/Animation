@@ -34,7 +34,8 @@ site/              installed front-end stack for the episode site (no pages yet)
                    Modern Web Guidance (Apache-2.0),
                    Stickman Video Director (MIT),
                    Papercut Explainer ×9 (MIT),
-                   Auto Ontology MCP (Apache-2.0)
+                   Auto Ontology MCP (Apache-2.0),
+                   AFFiNE / BlockSuite (MIT + EE)
 ```
 
 ## Render

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@astryxdesign/core": "^0.7.15",
+    "@blocksuite/affine": "^0.22.4",
     "@fontsource-variable/inter": "5.3.0",
     "@fontsource/archivo-black": "latest",
     "@fontsource/baloo-2": "latest",

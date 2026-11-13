@@ -658,3 +658,51 @@ Compose stack with a FastAPI backend and a Next.js frontend. This sandbox has Py
 it is the only entry here about *data* rather than pixels. There is no MIKAY data set to
 put in an ontology yet — episode catalogue, upload queue and QA results would be the
 candidates once they are real.
+
+## AFFiNE (`@blocksuite/affine` 0.22.4) — the editor, not the server
+
+[toeverything/AFFiNE](https://github.com/toeverything/AFFiNE) · 74.5k★ · docs +
+whiteboard + database in one page tree, self-hostable.
+
+### Licence is **mixed** — the important finding
+
+GitHub reports `NOASSERTION` for a reason:
+
+| Path | Licence |
+|---|---|
+| everything else (client, frontend, editor) | **MIT** |
+| `packages/backend`, `packages/common/native` | **AFFiNE Enterprise Edition** — production use requires AFFiNE's subscription terms |
+
+So the editor is MIT and usable; **the server is not free for production**. Self-hosting
+means reading the EE licence first.
+
+### What is installed
+
+`@blocksuite/affine@0.22.4` — BlockSuite-for-AFFiNE — in `site/` (MIT, 69 deps, 498
+packages added). Verified with esbuild:
+
+```tsx
+import { Schema } from "@blocksuite/affine/store";   // bundles to 442 KB, 0 errors
+```
+
+~210 subpath exports: `./store ./std ./model ./schemas ./rich-text
+./blocks/<block>/{store,view} ./widgets/… ./gfx/… ./components/… ./foundations/…`
+
+**Two traps found and documented:** there is **no `./presets`** export in 0.22.x
+(`AffineEditorContainer` is no longer shipped from the single package — editor assembly
+is per-block/per-widget), and `./effects` named exports are not stable across minors.
+
+### The repo itself is not vendored
+
+124 MB across 10,277 files — `packages/frontend` alone is 90 MB. Copying it here would
+dwarf every film, skill and asset in the project. It is documented instead, in
+`.claude/skills/affine/SKILL.md`.
+
+### Where it fits
+
+The project's memory already lives in files (`story/`, `docs/`, `references/`) because the
+renderer reads them. AFFiNE is for the *human* half: a page tree where the episode bible,
+beat sheets and shot notes are written and diagrammed side by side, self-hosted, no SaaS.
+The practical route is the app (run it from the official image and import these markdown
+files), not embedding BlockSuite — that needs a document provider, a yjs worker and its
+own styling, and a film site does not have an editor-shaped hole.
