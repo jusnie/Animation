@@ -2,7 +2,7 @@
   "name": "mikay-site",
   "private": true,
   "version": "0.1.0",
-  "description": "Front-end toolchain for the MIKAY episode site. Tooling only \u2014 no pages yet.",
+  "description": "Front-end toolchain for the MIKAY episode site. Tooling only — no pages yet.",
   "scripts": {
     "check": "node -e \"console.log('toolchain ok')\""
   },
@@ -21,9 +21,11 @@
     "clsx": "latest",
     "embla-carousel-react": "latest",
     "lucide-react": "1.72.0",
+    "opus-react": "^0.18.1",
     "sonner": "2.0.8",
     "tailwind-merge": "latest",
     "tailwindcss-animate": "latest",
+    "three": "^0.185.1",
     "vaul": "1.1.2",
     "zod": "latest",
     "zustand": "latest"

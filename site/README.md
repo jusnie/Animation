@@ -512,3 +512,57 @@ Two things transfer to MIKAY even without the library:
 
 It is a different visual language from the stick-figure films — paper, not line — so it
 is a second format for the channel, not a replacement for `tools/build_video.py`.
+
+## Opus (`opus-react` 0.18.1) — the component library
+
+[project-opus.netlify.app](https://project-opus.netlify.app) · MIT · npm `opus-react`.
+A production React 19 design system for **data-heavy product surfaces**: 308 documented
+components across forms, dashboards, overlays, charts, auth screens, and full
+application shells (CRM workspaces, desktop environments, document managers).
+
+```bash
+npm install opus-react three
+```
+
+| | |
+|---|---|
+| Package | `opus-react@0.18.1` (130 versions, published 2026-11-11) |
+| Licence | MIT |
+| Peer deps | `react` / `react-dom` `^18.2 \|\| ^19`, **`three` `^0.185`** |
+| Weight | 42 MB unpacked, 150 transitive deps (maplibre, codemirror, fontawesome, remark) |
+| Exports | `.` · `./styles.css` · `./index.css` · `./flags.css` |
+
+### Verified in this sandbox
+
+`npm i opus-react` resolved and installed cleanly in `site/`, and a real bundle
+compiles against the stack already there:
+
+```tsx
+import { OpusThemeProvider, Button, TextField } from "opus-react";
+import "opus-react/styles.css";
+```
+
+→ esbuild bundle, **0 errors**. The package exposes 343 typed exports; the theme entry
+point is `OpusThemeProvider`.
+
+### Two things to know before you build a page
+
+1. **`three` is a required peer dependency**, not optional — importing anything from the
+   package pulls it in. It is installed alongside (`three@0.185.1`).
+2. **It is heavier than the rest of the stack.** 42 MB unpacked and 150 transitive
+   dependencies, because the library bundles maplibre (maps), CodeMirror (a code editor),
+   FontAwesome and remark (markdown) for its lab components. If a film site only needs
+   a player, cards and a nav, import from the primitives you use and watch the bundle —
+   the first component you touch costs ~7 MB before tree-shaking.
+
+### Where it fits
+
+Opus and the four design skills answer different questions. Opus is **finished
+components** — it will make the admin/back-of-house surfaces (episode catalogue, upload
+queue, analytics) look professional immediately. The skills are for the **public film
+page**, where the design has to be yours. Mixing them is fine as long as the public page
+does not start reading like a dashboard.
+
+It is the one item in this install with an opinion about *internal tools*, not about
+this project — installed because you linked it, and documented here so it is not a
+mystery dependency six months from now.
