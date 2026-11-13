@@ -23,7 +23,8 @@ site/
 | Accessible primitives | `@radix-ui/themes` (and `@radix-ui/react-*` set) | 3.3.0 |
 | Class composition | `clsx`, `tailwind-merge`, `class-variance-authority` | latest |
 | Icons | `lucide-react` | 1.72.0 |
-| Motion / polish | `tailwindcss-animate`, `embla-carousel-react`, `sonner`, `vaul` | latest |
+| Motion / polish | `tailwindcss-animate`, `embla-carousel-react` | latest |
+| Interaction primitives — **Emil Kowalski** | `sonner` 2.0.8 (toasts), `vaul` 1.1.2 (drawers) | pinned |
 | State | `zustand` | latest |
 | Validation | `zod` | latest |
 | Type system | `typescript`, `@types/react`, `@types/react-dom`, `@types/node` | latest |
@@ -62,3 +63,50 @@ The same three faces are already in `assets/fonts/` as `.ttf` for the renderer
 (`Poppins 700/800/900`, `Baloo2 700/800`, `ArchivoBlack 400`, `Nunito 900`), so the site
 and the burned-in captions can match. In React, import from the matching fontsource
 package instead of shipping the ttf files twice.
+
+## Emil Kowalski's primitives
+
+`sonner` and `vaul` are already part of the stack above — they are Emil Kowalski's
+libraries, and they are what makes a site feel considered rather than merely styled:
+spring-eased toasts, drag-to-dismiss drawers, interruptible transitions.
+
+```tsx
+// a toast
+import { Toaster, toast } from "sonner";
+<Toaster position="bottom-right" richColors closeButton />
+toast.success("Episode 2 is live");
+
+// a drawer
+import { Drawer } from "vaul";
+<Drawer.Root shouldScaleBackground>
+  <Drawer.Trigger>Open</Drawer.Trigger>
+  <Drawer.Portal><Drawer.Content>…</Drawer.Content></Drawer.Portal>
+</Drawer.Root>
+```
+
+### His written guidance, installable
+
+`@animationsdev/install` (npm, maintained by `emilkowalski`) installs the
+**animations.dev** agent skills — the distilled rules behind his interfaces — into Claude
+Code, Cursor, Codex, Windsurf, Gemini CLI, OpenCode or Amp.
+
+It is **not run here**: it needs (a) a coding agent detected on the machine and (b) a
+personal install token from animations.dev, and both would be yours, not the repo's.
+To add it locally:
+
+```bash
+npx @animationsdev/install --token=<your-token> emil --project
+```
+
+Supply your own token at that prompt — never commit it. If you do install it, the skill
+text lands in `.claude/skills/` (or your agent's equivalent); ignore that folder if you
+would rather keep it machine-local.
+
+### What to apply, in one line each
+
+- Animate **transform and opacity only** — never layout properties.
+- Keep UI motion **under ~200 ms**; exits faster than entrances.
+- Ease **out** on entry, **in** on exit; no linear easing on interactive elements.
+- Every interactive state gets a transition: hover, press (`scale(0.98)`), focus ring.
+- Respect `prefers-reduced-motion` — ship the instant version first.
+- Motion should explain a change of state, not decorate a static page.
