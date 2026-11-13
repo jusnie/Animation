@@ -6,26 +6,14 @@ the film-look VFX are synthesised, and the films are assembled by scripts.
 
 ## Films
 
-| Film | Length | File | Notes |
-| --- | --- | --- | --- |
-| **THE DAY BEFORE** | 41 s | `render/mikay-day0.mp4` | the last ordinary day |
-| DAY 1: THEY'RE OUTSIDE | 43 s | `render/mikay-day1.mp4` | the outbreak |
-| EP 0 — animated experiment | 35 s | `render/mikay-ep0.mp4` | rig-driven cut of the same story |
+| Film | Length | File |
+| --- | --- | --- |
+| **THE DAY BEFORE** — the last ordinary day | 39 s | `render/mikay-day0.mp4` |
+| **DAY 1: THEY'RE OUTSIDE** — the premise | 43 s | `render/mikay-day1.mp4` |
 
-All are 1920×1080, 24 fps, with narration, burned-in subtitles, a running timecode
+Both are 1920×1080, 24 fps, with narration, burned-in subtitles, a running timecode
 (top right), and a real 35 mm film emulation. **No background music** — narration and diegetic
 sound only.
-
-### Subtitles
-
-The face is **Baloo 2 ExtraBold**, auto-fitted: each caption wraps to at most two lines and
-the type steps down until it fits the safe width, so nothing ever runs off the frame.
-
-### EP 0 (animation experiment)
-
-`tools/mikay_rig.py` + `tools/animate.py` add a pose-driven 2-D rig (walk cycles, blinks,
-mouth flaps, breathing) that can be composited into plate crops. It is kept in the repo as an
-experiment; the primary films still use the illustrated plates.
 
 ## Layout
 
@@ -40,15 +28,15 @@ references/        the three thumbnails the style was learned from + style notes
 story/             beat sheets, character bible, locked narration scripts
 tools/             script data, SFX generator, mixer, video builder, VFX port
 render/            output
+site/              installed front-end stack for the episode site (no pages yet)
 ```
 
 ## Render
 
 ```bash
-./render.sh day0         # effects -> mix -> picture (default)
-./render.sh day0 video   # picture only
-./render.sh day1         # the outbreak film
-./render.sh ep0          # the animated experiment
+./render.sh day0          # effects -> mix -> picture
+./render.sh day0 video    # picture only
+./render.sh day1          # the outbreak film
 ```
 
 ## Guarantees the pipeline enforces
@@ -56,12 +44,7 @@ render/            output
 - **Subtitles cannot drift.** The spoken string and the burned-in caption are the same
   value in `tools/script_data.py`; `build_video.py` asserts the SRT and the on-screen
   text reproduce it word for word.
-- **Subtitles are on the word.** Ep 0's narration is *one audio file per sentence*, and a
-  caption is nothing but `[segment start, segment start + measured speech length]` — no
-  proportional guessing, no title-card offset. `build_audio.py` also trims each clip's
-  encoder lead-in silence, so the first syllable and the caption land together
-  (measured drift ≤ 1 frame).
-- **No camera moves.** Fixed crops, hard cuts; motion comes from the rig and the film look.
+- **No camera moves.** Static plates, hard cuts — motion comes from the film emulation.
 - **The voice always wins.** Effects are ducked 6 dB under every spoken line.
 - **VFX is not generated.** `tools/vfx.py` is a port of an MIT-licensed GitHub project,
   credited in `docs/VFX.md`.

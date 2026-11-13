@@ -402,18 +402,6 @@ def tv_news(dur=7.0):
     return lp(out + hiss, 4200) * 0.9
 
 
-def cat_meow(dur=0.55, f0=520.0):
-    """A short, friendly meow: a rising-then-falling formant sweep."""
-    x = tt(dur)
-    n = len(x)
-    e = env_ad(n, 0.05, 2.2)
-    f = f0 * (1.0 + 0.28 * np.sin(np.linspace(0, np.pi, n)) ** 0.7)
-    ph = 2 * np.pi * np.cumsum(f) / SR
-    y = (np.sin(ph) + 0.42 * np.sin(2 * ph) + 0.18 * np.sin(3 * ph)) * e
-    y = bp(y, 380, 2400)
-    return reverb(norm(y, 0.5), decay=0.35, mix=0.16)
-
-
 CUES = {
     "bang": lambda: bang(),
     "bang_series": lambda: bang_series(3),
@@ -448,7 +436,6 @@ CUES = {
     "phone": phone_buzz,
     "cloth": cloth_rustle,
     "tvnews": tv_news,
-    "cat": cat_meow,
 }
 
 

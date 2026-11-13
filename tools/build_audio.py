@@ -44,20 +44,6 @@ def load_mp3(path):
     return load(tmp)
 
 
-def trim_onset(x, thresh=0.012, pad=0.008):
-    """Drop the encoder's lead-in silence so the first syllable lands on the cue time.
-
-    TTS mp3s carry 30-90 ms of dead air; without this the caption appears a couple of
-    frames before the voice, which is exactly the drift the subtitles were fixing.
-    """
-    env = np.max(np.abs(x), axis=0)
-    loud = np.where(env > thresh)[0]
-    if len(loud) == 0:
-        return x, 0.0
-    start = max(0, loud[0] - int(pad * SR))
-    return x[:, start:], start / SR
-
-
 def add(buf, x, at, gain=1.0):
     s = int(SR * at)
     if s >= buf.shape[1]:
@@ -81,32 +67,7 @@ def smooth_env(x, attack=0.02, release=DUCK_RELEASE):
 # Cue sheets: (effect, offset from the segment start OR absolute, gain, note)
 #   ("anchor", id, offset)  -> absolute time relative to that narration line
 # --------------------------------------------------------------------------------------
-EP0_CUES = [
-    ("birds", ("e01", 0.20), 0.42, "morning birds through the window"),
-    ("cloth", ("e01", 0.05), 0.34, "she pushes the blanket back"),
-    ("steps", ("e02", 0.10), 0.30, "her feet on the wooden floor"),
-    ("alarm", ("e03", 0.12), 0.60, "the twin-bell alarm"),
-    ("alarm", ("e03", 0.95), 0.34, "still ringing, muffled by the pillow"),
-    ("cloth", ("e03", 1.90), 0.38, "she rolls over and hits snooze"),
-    ("tap", ("e04", 0.10), 0.52, "the bathroom tap"),
-    ("brush", ("e04", 0.60), 0.42, "toothbrush"),
-    ("tap", ("e04", 1.90), 0.26, "water draining"),
-    ("steps", ("e05", 0.15), 0.50, "sneakers on the sidewalk"),
-    ("birds", ("e05", 0.60), 0.38, "birds in the trees"),
-    ("sprinkler", ("e05", 1.40), 0.34, "a lawn sprinkler arcing over the path"),
-    ("cat", ("e06", 0.35), 0.34, "a small meow from the fence"),
-    ("tvnews", ("e07", 0.20), 0.44, "the television muttering"),
-    ("spoon", ("e07", 1.30), 0.32, "cereal"),
-    ("phone", ("e07", 2.20), 0.40, "her phone buzzes, ignored"),
-    ("tvnews", ("e08", 0.10), 0.30, "click, the channel changes"),
-    ("crickets", ("e09", 0.20), 0.46, "crickets outside"),
-    ("room", ("e09", 0.30), 0.36, "the house settling"),
-    ("wind", ("e09", 1.30), 0.30, "the window left open"),
-    ("boom", ("e10", 0.20), 0.30, "a low swell under the last line"),
-]
-
 CUE_SHEETS = {
-    "ep0": EP0_CUES,
     "day0": [
         # ---- waking up
         ("alarm", ("d1", 0.10), 0.55, "the alarm clock is ringing"),
@@ -193,9 +154,7 @@ def main():
     plan = {"film": key, "total": round(total, 3), "voice": [], "sfx": []}
 
     for seg in timeline:
-        clip, trimmed = trim_onset(load_mp3(os.path.join(S.AUDIO, seg["audio"])))
-        add(vo, clip, seg["start"], VO_GAIN)
-        seg["onset_trim"] = round(trimmed, 3)
+        add(vo, load_mp3(os.path.join(S.AUDIO, seg["audio"])), seg["start"], VO_GAIN)
         plan["voice"].append(dict(id=seg["id"], start=round(seg["start"], 3),
                                   end=round(seg["start"] + seg["audio_dur"], 3)))
 

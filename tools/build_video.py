@@ -2,9 +2,9 @@
 """
 Builds one MIKAY film as a finished MP4.
 
-Picture : still illustrated plates (no camera moves, hard cuts), the ported grainlight
-          35 mm film look from tools/vfx.py, burned-in subtitles, a MIKAY badge
-          top-left and a running timecode top-right.
+Picture : static illustrated frames (no zoom), short cross-dissolves, the ported
+          grainlight 35 mm film look from tools/vfx.py, burned-in subtitles, a MIKAY
+          badge top-left and a running timecode top-right.
 Sound   : render/{slug}_mix.wav from build_audio.py (narration + SFX, no music).
 
 Run:  .venv/bin/python tools/build_video.py [day0|day1]
@@ -28,7 +28,7 @@ FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 
 MARGIN = 86
 DISSOLVE = 0              # hard cuts between beats (line art ghosts in a mix)
-TITLE_DUR = 1.5           # opening title card; films that declare lead_in own it
+TITLE_DUR = 1.5           # opening title card, so the title never sits on her face
 VFX_STRENGTH = 0.70      # grainlight 35mm look, dialled in for h264
 CRF = 23
 
@@ -41,18 +41,6 @@ BADGE_H = 78
 
 def font(size, weight="800"):
     return ImageFont.truetype(os.path.join(FONTS, f"Poppins-{weight}.ttf"), size)
-
-
-# Subtitle face: Baloo 2 ExtraBold — rounder, heavier counters than Poppins at the same
-# size, so it stays legible over bright plates without needing a fat outline.
-SUB_FONT = "Baloo2-800.ttf"
-SUB_SIZE = 76
-SUB_STROKE = 10
-SUB_LIFT = 128          # px above the bottom edge to the baseline of the last line
-
-
-def sub_font(size=SUB_SIZE):
-    return ImageFont.truetype(os.path.join(FONTS, SUB_FONT), size)
 
 
 # ------------------------------------------------------------------------ subtitles
@@ -105,36 +93,12 @@ def timed_chunks(text, fnt, start, dur):
     return out
 
 
-def layout_caption(text, max_w, max_lines=2):
-    """Wrap one caption into at most `max_lines`, shrinking the type until it fits.
-
-    Captions here can cover a whole spoken paragraph, so a fixed size would either
-    overflow the frame or push a word onto a fourth line. Instead the size steps down
-    until the wrap lands inside the safe width — every caption stays on screen.
-    """
-    probe = ImageDraw.Draw(Image.new("RGB", (10, 10)))
-    fallback = None
-    for size in range(SUB_SIZE, 49, -4):
-        fnt = sub_font(size)
-        if "\n" in text:
-            lines = text.split("\n")
-        else:
-            lines = wrap(text, fnt, max_w, probe)
-        if all(probe.textlength(l, font=fnt) <= max_w for l in lines):
-            if len(lines) <= max_lines:
-                return fnt, lines
-            if fallback is None:
-                fallback = (fnt, lines)
-    return fallback if fallback else (sub_font(52), lines)
-
-
-def subtitle_layer(text, fnt=None, stroke=SUB_STROKE):
-    """One caption, centred, never wider than the safe area, burned in over the plate."""
-    fnt, lines = layout_caption(text, W * 0.80)
+def subtitle_layer(text, fnt, stroke=9):
     layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
-    lh = fnt.size * 1.34
-    base_y = H - SUB_LIFT - lh * (len(lines) - 1)
+    lines = text.split("\n")
+    lh = fnt.size * 1.30
+    base_y = H - 138 - lh * len(lines)
     for i, line in enumerate(lines):
         tw = d.textlength(line, font=fnt)
         d.text(((W - tw) / 2, base_y + i * lh), line, font=fnt,
@@ -144,9 +108,9 @@ def subtitle_layer(text, fnt=None, stroke=SUB_STROKE):
     sd = ImageDraw.Draw(shadow)
     for i, line in enumerate(lines):
         tw = sd.textlength(line, font=fnt)
-        sd.text(((W - tw) / 2, base_y + i * lh + 8), line, font=fnt,
-                fill=(0, 0, 0, 120), stroke_width=stroke, stroke_fill=(0, 0, 0, 90))
-    return Image.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(9)), layer)
+        sd.text(((W - tw) / 2, base_y + i * lh + 7), line, font=fnt,
+                fill=(0, 0, 0, 130), stroke_width=stroke, stroke_fill=(0, 0, 0, 100))
+    return Image.alpha_composite(shadow.filter(ImageFilter.GaussianBlur(8)), layer)
 
 
 def scrim():
@@ -277,15 +241,11 @@ def main():
     key = sys.argv[1] if len(sys.argv) > 1 else S.DEFAULT_FILM
     spec = S.film(key)
     os.makedirs(OUT, exist_ok=True)
-    fnt_sub = sub_font()
+    fnt_sub = font(60, "800")
     timeline, total = S.build_timeline(spec, FFMPEG)
 
-    lead = float(spec.get("lead_in", 0.0))
     for seg in timeline:
-        # ONE caption per utterance: it starts with the measured speech onset and ends
-        # when that utterance ends. No proportional guessing, no title-card offset.
-        seg["subs"] = [dict(text=seg["text"], start=seg["start"],
-                            end=seg["start"] + seg["audio_dur"])]
+        seg["subs"] = timed_chunks(seg["text"], fnt_sub, seg["start"], seg["audio_dur"])
         flat = " ".join(x["text"].replace("\n", " ") for x in seg["subs"])
         assert re.sub(r"\s+", " ", flat).strip() == re.sub(r"\s+", " ", seg["text"]).strip(), \
             f"subtitle drift on {seg['id']}"
@@ -298,7 +258,7 @@ def main():
     card = end_card(spec).resize((W, H), Image.LANCZOS)
 
     look = vfx.FilmLook(W, H, strength=VFX_STRENGTH, cache={})
-    sub_imgs = {id(s): subtitle_layer(s["text"])
+    sub_imgs = {id(s): subtitle_layer(s["text"], fnt_sub)
                 for seg in timeline for s in seg["subs"]}
     scrim_img = scrim()
     corner = corner_scrim()
@@ -327,8 +287,7 @@ def main():
 
     # ---- opening title card
     card_img = title_card(spec)
-    title_dur = lead or TITLE_DUR
-    for f in range(int(round(title_dur * FPS))):
+    for f in range(int(round(TITLE_DUR * FPS))):
         fade_in = min(1.0, (f / FPS) / 0.25)
         img = Image.blend(Image.new("RGB", (W, H), (0, 0, 0)), card_img, fade_in)
         emit(look.apply(img, written))
@@ -350,9 +309,8 @@ def main():
                 img = Image.alpha_composite(img, sub_imgs[id(active)])
             if tsec < S.TITLE_SHOW:
                 img = Image.alpha_composite(img, badge)
-            img = Image.alpha_composite(img, corner)
             img = Image.alpha_composite(
-                img, tc_cache[min(len(tc_cache) - 1, max(0, int(tsec)))])
+                img, tc_cache[min(len(tc_cache) - 1, max(0, int(TITLE_DUR + tsec)))])
 
             frame = look.apply(img.convert("RGB"), written)
             fade = 1.0
@@ -367,7 +325,7 @@ def main():
         img = card
         if f < 4:
             img = Image.blend(prev_plate, card, (f + 1) / 5.0)
-        frame = look.apply(img, written)
+        frame = look.apply(img.convert("RGB"), written)
         fade = 1.0
         if f / FPS > spec["end_hold"] - 0.7:
             fade = max(0.0, (spec["end_hold"] - f / FPS) / 0.7)

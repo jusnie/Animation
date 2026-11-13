@@ -1,0 +1,47 @@
+{
+  "name": "mikay-site",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Front-end toolchain for the MIKAY episode site. Tooling only — no pages yet.",
+  "scripts": {
+    "check": "node -e \"console.log('toolchain ok')\""
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "latest",
+    "@fontsource/archivo-black": "latest",
+    "@fontsource/baloo-2": "latest",
+    "@radix-ui/react-accordion": "latest",
+    "@radix-ui/react-dialog": "latest",
+    "@radix-ui/react-dropdown-menu": "latest",
+    "@radix-ui/react-slot": "latest",
+    "@radix-ui/react-tabs": "latest",
+    "@radix-ui/react-tooltip": "latest",
+    "@radix-ui/themes": "^3.3.0",
+    "class-variance-authority": "latest",
+    "clsx": "latest",
+    "embla-carousel-react": "latest",
+    "lucide-react": "latest",
+    "sonner": "latest",
+    "tailwind-merge": "latest",
+    "tailwindcss-animate": "latest",
+    "vaul": "latest",
+    "zod": "latest",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "next": "latest",
+    "postcss": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "shadcn": "^4.23.0",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  }
+}

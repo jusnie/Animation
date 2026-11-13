@@ -33,7 +33,6 @@ DAY0 = dict(
     title_big="THE DAY BEFORE",
     end_card=dict(big="DAY 1.", small="THEY'RE OUTSIDE."),
     end_hold=3.0,
-    lead_in=1.5,
     # (id, frame, audio, spoken text == subtitle text)
     narration=[
         dict(id="d1", frame="p1-morning.png", audio="d1.mp3",
@@ -66,7 +65,6 @@ DAY1 = dict(
     title_big="DAY 1",
     end_card=dict(big="DAY 4.", small="THEY WEREN'T TRYING TO GET IN."),
     end_hold=2.6,
-    lead_in=1.5,
     narration=[
         dict(id="n1", frame="f1-hook.png", audio="n1.mp3",
              text="Day one. I did everything right."),
@@ -88,36 +86,7 @@ DAY1 = dict(
     ],
 )
 
-# --------------------------------------------------------------------------------------
-# FILM: ep0 — the animated episode. ONE caption per narration file, so a caption can
-# never drift inside a sentence: the picture is drawn frame-driven and every caption
-# owns exactly the measured length of its own utterance.
-# --------------------------------------------------------------------------------------
-EP0_LINES = [
-    ("e01", "This is what a normal day looked like."),
-    ("e02", "I didn't know it yet."),
-    ("e03", "My alarm went off at seven, and I hit snooze twice."),
-    ("e04", "I brushed my teeth in the same mirror, with the same face."),
-    ("e05", "I walked to the bus stop past the same houses."),
-    ("e06", "The same cat was on the same fence."),
-    ("e07", "Afternoon cartoons, and a city name I had never heard of."),
-    ("e08", "I changed the channel."),
-    ("e09", "That night I left my window open."),
-    ("e10", "Someone was standing under the streetlight, waiting for a friend."),
-]
-
-EP0 = dict(
-    slug="mikay-ep0",
-    title_badge="MIKAY",
-    title_big="THE DAY BEFORE",
-    end_card=dict(big="DAY 1.", small="THEY'RE OUTSIDE."),
-    end_hold=3.2,
-    lead_in=1.5,            # the title card plays over silence; narration starts after it
-    animated=True,
-    narration=[dict(id=i, audio=f"{i}.mp3", text=t) for i, t in EP0_LINES],
-)
-
-FILMS = {"day0": DAY0, "day1": DAY1, "ep0": EP0}
+FILMS = {"day0": DAY0, "day1": DAY1}
 DEFAULT_FILM = "day0"
 
 
@@ -144,12 +113,8 @@ def media_duration(path, ffmpeg):
 
 
 def build_timeline(spec, ffmpeg):
-    """Returns (segments, total_seconds). Each segment carries absolute start/end.
-
-    `lead_in` shifts everything by the length of the title card, in BOTH the audio
-    builder and the video builder, so picture, voice and caption share one clock.
-    """
-    timeline, t = [], float(spec.get("lead_in", 0.0))
+    """Returns (segments, total_seconds). Each segment carries absolute start/end."""
+    timeline, t = [], 0.0
     for seg in spec["narration"]:
         seg = dict(seg)
         dur = media_duration(os.path.join(AUDIO, seg["audio"]), ffmpeg)

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Render pipeline for the MIKAY films.
-#   ./render.sh                  THE DAY BEFORE (day0)
-#   ./render.sh day1             one film (day0 | day1 | ep0)
+#   ./render.sh                  all effects + score-free mix + both films
+#   ./render.sh day0             one film
 #   ./render.sh day0 video       picture only (audio mix already exists)
 set -euo pipefail
 cd "$(dirname "$0")"

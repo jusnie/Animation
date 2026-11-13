@@ -58,13 +58,3 @@ grain without the photochemical grade), `artzox/Film-Standalone` (ReShade `.fx`,
 GPU game pipeline), `Luci0n/CrowFX-Unity-Image-Effects` and the Unity/Godot grain
 shaders (engine-locked). `grainlight` was the only one that is both a complete 35 mm
 emulation **and** MIT-licensed, so it is the one that ships.
-
-## Animation layer (ep0)
-
-The interior of a MIKAY episode is a hand-authored 2-D rig, not a sprite sheet:
-`tools/mikay_rig.py` is a small pose-driven character (hips / knees / ankles / shoulders /
-elbows / hands), and `tools/animate.py` renders it into a 16:9 crop of a background plate on
-every frame. Everything moves from continuous functions of shot time — walk phase, breath
-phase, blink windows, mouth flap, ponytail swing — so no two frames of a shot are identical
-and no camera movement is needed. The shot list is bound one-to-one to the narration lines,
-which is what keeps the subtitles locked to the voice.
