@@ -889,3 +889,46 @@ which is exactly right under a palette set by `tools/vfx.py` and Hallmark's Dark
 usable for dialogs, popovers, menus and focus management under a hand-built page. It is
 not a replacement for shadcn and not a page in itself. Detail:
 [`docs/ui-sdk.md`](../docs/ui-sdk.md).
+
+## Scroll choreography: scroll-craft, oil-motion, react-kino
+
+Three answers to "animate when you scroll", at three different levels — all MIT.
+
+| Where | What | Star count |
+|---|---|---|
+| `.claude/skills/scroll-craft/` | agent skill + its own 62 KB attribute-driven engine | 5,034★ |
+| `.claude/skills/oil-motion/` | agent skill + 16-script Python video-scrub pipeline | 2,898★ |
+| `react-kino@0.6.0` + `@react-kino/core@0.4.0` | real React library: Story/Scene + portable document + local editor | 221★ |
+
+```tsx
+import { Story } from "react-kino/story";
+import { Storyboard } from "react-kino/studio";
+import { createStoryRecipe } from "react-kino/recipes";
+const doc = createStoryRecipe("editorial");   // launch | editorial | case-study
+                                              // comparison | gallery | portfolio
+<Story document={doc} components={createRecipeComponents()} />
+```
+
+Verified: Story + Storyboard + recipe compile to 136 KB, **0 errors**. Editor lives at
+`react-kino/studio` and is not imported by the runtime; documents are data only, imports
+capped at 2 MB. Below 640 px and under `prefers-reduced-motion` a story degrades to a
+natural reading layout — the fallback hand-rolled GSAP sites usually skip.
+
+**Trap:** `react-kino/document` exports no `Document`. Use the root entry — `Story`,
+`Scene`, `useScrollProgress`, `ScrollTransform`, `TextReveal`, `HorizontalScroll`,
+`Parallax`, `Marquee`, `StickyHeader`, `VideoScroll`, `Progress`, `Reveal`, `Counter`,
+`Panel`, `CompareSlider`.
+
+**scroll-craft** is a page grammar (journey → grammar → emotional peak → one signature
+move) plus a declarative engine: 28 `data-sc-*` attributes (`parallax`, `pan`, `drift`,
+`magnet`, `reveal`, `kinetic`, `cue`, `dwell`, `linger`, `count`, `clip-map`, `progress`),
+with `doctor.mjs` / `serve.mjs` / `shoot.mjs` / `encode.sh` / `worldflight-assert.mjs`.
+Preflight here: node ok, **ffmpeg FAIL**, playwright + Chrome warned, no KIE key (only
+needed to *generate* imagery).
+
+**oil-motion** turns AI-generated or existing frames into scroll/pointer/drag/touch-driven
+web animation. 16 Python scripts pass `py_compile`; needs ffmpeg/ffprobe to actually
+compile, so — like AVAL — it is installed and readable but cannot output here. English
+README is `README.en.md`.
+
+Detail: [`docs/scroll-choreography.md`](../docs/scroll-choreography.md).

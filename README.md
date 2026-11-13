@@ -29,6 +29,7 @@ story/             beat sheets, character bible, locked narration scripts
 tools/             script data, SFX generator, mixer, video builder, VFX port
 render/            output
 site/              installed front-end stack for the episode site (no pages yet)
+                   + scroll motion: react-kino (MIT)
                    + docs/PORTFOLIO-REFERENCE.md: what to build it with and what to read
 skills-lock.json   integrity pin written by the modern-web-guidance installer
 .claude/skills/    skills: UI/UX Pro Max (MIT), Impeccable (Apache-2.0),
@@ -37,6 +38,7 @@ skills-lock.json   integrity pin written by the modern-web-guidance installer
                    Stickman Video Director (MIT),
                    Papercut Explainer ×9 (MIT),
                    UI SDK / vercel-labs (Apache-2.0),
+                   scroll-craft (MIT), oil-motion (MIT), react-kino (MIT),
                    Auto Ontology MCP (Apache-2.0),
                    AFFiNE / BlockSuite (MIT + EE), mapcn (MIT),
                    Front-End Checklist (MIT)
