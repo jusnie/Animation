@@ -340,3 +340,73 @@ approved B5 review clips in `reference-media/`. Cut:
 - The repo's own `assets/readme/` (220 MB of README videos and GIFs) was never copied.
 
 `node_modules/` (62 MB) is gitignored; `npm install` in that folder restores it.
+
+## Hallmark (anti-AI-slop gate) 2.0.0
+
+Nutlope's design skill — the bluntest of the four, and the one that actually **fails
+your code**. MIT, at `.claude/skills/hallmark/` (137 files, 2 MB).
+
+```
+SKILL.md                 "The Floor": 11 non-waivable rules + ~60 numbered gates
+references/gates.md      40 KB — the gate catalogue with ids and tiers
+references/themes/       50 theme specs + the JPGs each one is argued against
+references/genres|macrostructures/   editorial · modern-minimal · atmospheric · playful
+scripts/sloplint.mjs     the mechanical gate checker (zero deps, Node 18+)
+scripts/theme.mjs        deals a theme; scaffolds tokens
+scripts/capture|picture|imagegen|refcheck   screenshot and asset gates
+```
+
+### sloplint is the useful part, and it runs here
+
+```bash
+node .claude/skills/hallmark/scripts/sloplint.mjs site/src
+node .claude/skills/hallmark/scripts/sloplint.mjs --url http://localhost:3000
+```
+
+It reads `.html .css .jsx .tsx .vue .svelte .astro` — including Tailwind class strings
+and `cn/cva` calls. On a deliberately bad test file it fired:
+
+```
+FAIL 2a  purple-to-blue gradient            → one anchor hue, solid ink
+FAIL 10a transition-all                     → name the properties
+FAIL 26a no :focus-visible styling anywhere → instant 3:1 ring
+FAIL 30a emoji icon "🚀"                    → one icon library or SVG
+FAIL 63  arrow glued to the label           → a verb as the label
+FAIL 67  "FEATURES" uppercase 11px tracked  → sentence case, body face, untracked
+REFLEX 26b no :active styling anywhere
+```
+
+`site/src` currently returns *"no files found"* — there is no UI to lint yet. That is
+the first thing to run the moment a page exists; `--before` records a baseline, `--kept`
+checks a redesign against it.
+
+### The theme deal it gave for this project
+
+```bash
+node .claude/skills/hallmark/scripts/theme.mjs deal --genre editorial \
+  --prompt "dark cinematic portfolio for a stick-figure animated film series …"
+```
+
+→ **Midnight** (dark / grotesk-sans / cool: midnight-blue ground, cool white ink, Mona
+Sans expanded at 300, one azure signal), **Specimen** (light, Bodoni Moda over Geist,
+hairline rules), **Darkroom** (warm print-black, fine grain, Sofia Sans Extra Condensed
+hairline capitals, one amber safelight). *Darkroom* is the obvious match for the films —
+it describes the same 35mm grain look already ported into `tools/vfx.py`.
+
+The deal writes a `.hallmark/` log beside where it runs; I removed the stray one my
+test created. Add `.hallmark/` to a local `.gitignore` if you use it.
+
+### Trimmed
+
+`references/themes/*.jpg` (50 files, 5.4 MB) — the theme *specs* are all committed; the
+reference photographs are not. Pull them from the repo if you want to look at a theme
+before scaffolding it.
+
+### Four layers now
+
+| Skill | Answers | Runs here? |
+|---|---|---|
+| **UI/UX Pro Max** | *what* — palette/type/layout data | ✔ data only |
+| **Impeccable** | *is it good* — 62-rule detector | ✔ npm engine |
+| **Taste Skill** | *build it* — direction + finish gate | ✔ non-browser tools |
+| **Hallmark** | *stop it* — hard floor, sloplint gate | ✔ sloplint |

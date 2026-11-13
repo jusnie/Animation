@@ -19,3 +19,7 @@ audio/music/
 
 # runtime deps of the stickman skill (npm install in that folder)
 .claude/skills/directing-stickman-videos/node_modules/
+
+# hallmark theme-deal log (per-run)
+.hallmark/
+**/.hallmark/
