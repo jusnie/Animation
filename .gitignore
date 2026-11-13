@@ -16,3 +16,6 @@ audio/music/
 # tasteskill build state (per-build, never committed)
 .taste-skill/
 **/.taste-skill/
+
+# runtime deps of the stickman skill (npm install in that folder)
+.claude/skills/directing-stickman-videos/node_modules/

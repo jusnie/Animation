@@ -277,3 +277,66 @@ sandbox, so those checks are for your machine.
 | **UI/UX Pro Max** | *what* — palette, pairing, layout data for the product type (searchable) |
 | **Impeccable** | *is it good* — critique, audit, 62-rule anti-slop detector |
 | **Taste Skill** | *build it* — art direction, layout deals, real photos/icons, the finish gate |
+
+## Stickman Video Director (`directing-stickman-videos`)
+
+Not a web-design skill — this one is for the films. It is a **director for stickman
+story videos**, which is exactly the shape of the MIKAY project: stick figure, narrated,
+captioned, sound effects, multi-style.
+
+```
+.claude/skills/directing-stickman-videos/      482 files + 7 reference clips
+  SKILL.md              the router: mode A (director) vs mode B (autopilot), styles A1–A6 / B1–B5
+  references/           43 playbooks — style catalog, autopilot runtime, sound system,
+                        portrait contract, per-style acceptance gates
+  scripts/              26 Node tools (autopilot, render, captions, style reviews,
+                        character-explainer, gemini-media, a6 finishing python)
+  assets/               fonts, style boards, approved contact sheets, B5 renderers
+  tests/                352 upstream tests
+```
+
+Source: `kaomei/stickman-video-director` (MIT), cloned at `main` — the repo has no
+release tags, so the commit is whatever `main` was on install.
+
+### The two modes
+
+- **A · Director** — produces an approved storyboard and standalone ~10-second prompts
+  for a video generator (Google Flow etc.). **No local rendering, no keys.**
+- **B · Autopilot** — storyboard → script → 20-second sound preview → full narrated,
+  captioned, SFX'd MP4 rendered locally. Needs an image model, a TTS voice, and ffmpeg.
+
+Five B styles ship: B1 minimal line art, B2 colourful hand-drawn, B3 retro TV,
+B4 survival thriller, B5 character explainer. B4's rule set is the closest to what we
+already do in `tools/build_video.py`: shots **≤3 seconds**, subtitle timing checked
+against actual speech, picture-animation reviews on the real MP4.
+
+### What works here, verified
+
+```bash
+cd .claude/skills/directing-stickman-videos
+npm install                        # @napi-rs/canvas + sharp
+node scripts/autopilot.mjs doctor
+# node ✔  canvas ✔  sharp ✔  fonts ✔  ffmpeg ✘  ffprobe ✘  gemini_key ✘
+
+node scripts/autopilot.mjs captions "word word word" out.json --lead 3
+```
+
+`captions` is the piece worth stealing first: it emits caption timings with a lead-in,
+which is the same problem the `lead_in = 1.5` in `tools/script_data.py` solves.
+
+`npm test` → **199 pass / 152 fail**, and every failure is environmental, not broken:
+134 are `ffmpeg`/`ffprobe` missing (no system ffmpeg in this sandbox — our films used a
+pip-installed imageio-ffmpeg inside a virtualenv that is no longer present), and 4 are
+reference clips I trimmed to stay under the size limit. With ffmpeg on PATH the suite
+should go green.
+
+### What I trimmed, and why
+
+The upstream skill folder is 68 MB; committed here is 36 MB of it plus 19 MB of the two
+approved B5 review clips in `reference-media/`. Cut:
+
+- `assets/b3/portrait-approved-2026-11-13.mp4` (1.3 MB) and the B3 public showcases
+  (3.6 MB) — the B1/B2/B3 style boards and contact sheets are kept instead.
+- The repo's own `assets/readme/` (220 MB of README videos and GIFs) was never copied.
+
+`node_modules/` (62 MB) is gitignored; `npm install` in that folder restores it.
