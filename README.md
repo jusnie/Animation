@@ -32,7 +32,8 @@ site/              installed front-end stack for the episode site (no pages yet)
 .claude/skills/    skills: UI/UX Pro Max (MIT), Impeccable (Apache-2.0),
                    Taste Skill (MIT), Hallmark (MIT),
                    Modern Web Guidance (Apache-2.0),
-                   Stickman Video Director (MIT)
+                   Stickman Video Director (MIT),
+                   Papercut Explainer ×9 (MIT)
 ```
 
 ## Render

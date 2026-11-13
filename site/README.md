@@ -462,3 +462,53 @@ advances the story — CSS-driven, no JS scroll listeners, no jank.
 `skills/chrome-extensions/` (24 files, 122 KB) — browser-extension guidance, not
 relevant to a film site. Pull it back with the clone command if you ever write an
 extension.
+
+## Papercut Explainer (nine skills, MIT)
+
+A second film pipeline — 0xS4N4TG's cut-paper explainer reel builder. Nine chained
+Agent Skills that turn a link or an idea into a 20–45 s vertical MP4 in the
+"layered construction paper brought to life" style: grainy paper props with drop
+shadows, rigid cut-out animation, a slow camera push with stop-motion paper *boil*, a
+taped headline banner per beat, and word-by-word torn-paper caption tags. Built with
+Remotion + any TTS.
+
+```
+.claude/skills/papercut-explainer/    the router + 6 references (style guide, motion
+                                      principles, remotion recipes, asset prompts …)
+.claude/skills/papercut-strategy/     angle and audience from the source
+.claude/skills/papercut-hook/         SAY / WRITE / SHOW / ALIGN + 5 scored hook variants
+.claude/skills/papercut-script/       the script and the staging table
+.claude/skills/papercut-storyboard/   beats → shots
+.claude/skills/papercut-build/        Remotion scenes
+.claude/skills/papercut-voice/        TTS direction
+.claude/skills/papercut-qa/           the acceptance pass
+.claude/skills/papercut-setup/        install-mode probing
+```
+
+Every beat runs **three tracks**: the voiceover tells the story, a taped banner adds a
+hard fact the voiceover skips, and a fresh paper set illustrates the voiceover's words.
+
+### What is committed, and what is not
+
+The nine skill texts (212 KB) are vendored. The upstream `library/` — a 15 MB Remotion
+project with the paper `kit/`, `backdrops-src/`, the episode `template/` and 14 MB of
+public textures, plus the audio and voice packs — is **not**. Stages 1–4 (strategy, hook,
+script, storyboard) need no library; stages 5–8 do. See
+`.claude/skills/papercut-explainer/LIBRARY-README.md` for the clone + `$PAPERCUT_LIB`
+instructions.
+
+### Why it is here
+
+Two things transfer to MIKAY even without the library:
+
+1. **`references/style-guide.md`** — a measured style DNA. Colours are pixel-sampled,
+   motion is tracked at 30 fps, the paper *boil* is specified in frames. That is the
+   level of specificity our `tools/vfx.py` constants already have, and it is a good
+   model for specifying Mikay's own look.
+2. **`papercut-hook`'s first-three-seconds discipline** — SAY / WRITE / SHOW / ALIGN,
+   written out before any script, scored against five variants. Our day0 film opens on
+   the apartment with a 1.5 s narration lead-in; this is the framework for arguing about
+   whether that opening earns the next ten seconds.
+
+It is a different visual language from the stick-figure films — paper, not line — so it
+is a second format for the channel, not a replacement for `tools/build_video.py`.
