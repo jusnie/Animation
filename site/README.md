@@ -566,3 +566,62 @@ does not start reading like a dashboard.
 It is the one item in this install with an opinion about *internal tools*, not about
 this project — installed because you linked it, and documented here so it is not a
 mystery dependency six months from now.
+
+## Astryx (`@astryxdesign/core` 0.7.15) — Meta's design system
+
+[meta/astryx](https://github.com/meta/astryx) · MIT · **Beta** · built on React 19 +
+StyleX. Grew inside Meta over eight years, powering 13,000+ apps; 150+ accessible
+components, brand-level theming, dark mode, a CLI, and swizzle (eject a component's
+source into your project to own it).
+
+```bash
+npm install @astryxdesign/core @stylexjs/stylex
+```
+
+| | |
+|---|---|
+| Package | `@astryxdesign/core@0.7.15` (published 2026-11-12) |
+| Licence | MIT, but **Beta** — the API can move |
+| Peer deps | `react` / `react-dom` `>=19.0.0`, `@stylexjs/stylex` `^0.19` |
+| Weight | 31 MB unpacked for core; 44 MB with StyleX installed |
+| Exports | `.` · `./reset.css` · `./astryx.css` · `./tailwind-theme.css` |
+
+**122 component directories** — AppShell, CommandPalette, DateRangeInput, MultiSelector,
+PowerSearch, Table, TreeList, Toast, TopNav/SideNav/MobileNav, Chat, Markdown, and more.
+
+### Verified in this sandbox, including the trap
+
+A real esbuild bundle compiles with 0 errors:
+
+```tsx
+import { Button, Card, TextInput, Theme } from "@astryxdesign/core";
+import "@astryxdesign/core/reset.css";
+import "@astryxdesign/core/astryx.css";
+
+<Theme><Card><TextInput label="Episode" /><Button>Ship</Button></Card></Theme>
+```
+
+**Gotchas that cost time here, so they do not cost time later:**
+
+1. The theme wrapper is **`<Theme>`**, not `<ThemeProvider>` — there is no
+   `ThemeProvider` export, and the build fails on it.
+2. The text field is **`TextInput`**; there is no `TextField`.
+3. **StyleX is a required peer.** `@stylexjs/stylex@0.19.2` is installed alongside.
+4. **No Tailwind plugin needed for consumption** — you import pre-built CSS. But it also
+   ships `tailwind-theme.css`, which maps Astryx tokens into Tailwind, so the two
+   systems can share one palette if asked.
+
+### Astryx or Opus?
+
+Both are now installed and both are data-heavy-product systems. Honestly:
+
+| | Opus | Astryx |
+|---|---|---|
+| Maturity | 130 versions, self-published | Meta, 8 years internal, **public beta** |
+| Components | 308 | 150+ (122 entries inspected) |
+| Styling | bundled CSS | StyleX-authored, overridable with anything |
+| Extras | maps, code editor, 3D mark | CLI + **swizzle** (own the source) |
+| Weight | 42 MB / 150 deps | 31 MB / 7 deps (**far leaner**) |
+
+Astryx's swizzle is the deciding feature: when a film page needs a component to look like
+*ours* rather than like a design system's, ejecting its source beats fighting its API.

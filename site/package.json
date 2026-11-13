@@ -7,6 +7,7 @@
     "check": "node -e \"console.log('toolchain ok')\""
   },
   "dependencies": {
+    "@astryxdesign/core": "^0.7.15",
     "@fontsource-variable/inter": "5.3.0",
     "@fontsource/archivo-black": "latest",
     "@fontsource/baloo-2": "latest",
@@ -17,6 +18,7 @@
     "@radix-ui/react-tabs": "latest",
     "@radix-ui/react-tooltip": "latest",
     "@radix-ui/themes": "3.3.0",
+    "@stylexjs/stylex": "^0.19.2",
     "class-variance-authority": "latest",
     "clsx": "latest",
     "embla-carousel-react": "latest",
