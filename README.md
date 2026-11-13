@@ -29,7 +29,8 @@ story/             beat sheets, character bible, locked narration scripts
 tools/             script data, SFX generator, mixer, video builder, VFX port
 render/            output
 site/              installed front-end stack for the episode site (no pages yet)
-.claude/skills/    UI/UX Pro Max (MIT) + Impeccable (Apache-2.0) design skills
+.claude/skills/    design skills: UI/UX Pro Max (MIT), Impeccable (Apache-2.0),
+                   Taste Skill / design-taste-frontend (MIT)
 ```
 
 ## Render

@@ -12,3 +12,7 @@ audio/music/
 
 # vendored skill data is committed; its scratch output is not
 .claude/skills/*/scripts/**/__pycache__/
+
+# tasteskill build state (per-build, never committed)
+.taste-skill/
+**/.taste-skill/

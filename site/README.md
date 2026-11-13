@@ -215,3 +215,65 @@ reach — hence the vendored copy of the same tagged release.)
   this kind of product. Answers *what*.
 - **Impeccable** — judgement and enforcement: critique it, grade it, catch the AI tells,
   make it bolder or quieter. Answers *is this good, and how do I fix it*.
+
+## Taste Skill (`design-taste-frontend` 2.5.1)
+
+Leonxlnx's anti-slop frontend skill — the "art direction" layer. Vendored from tag
+**`v2.5.1`** (MIT), folder renamed to its skill name so the upstream hook paths resolve.
+
+```
+.claude/skills/design-taste-frontend/    28 MB, 1565 files
+  SKILL.md                   the rules: plain copy, one system, one section per
+                             screen, equal edges, real photographs, real product UI
+  scripts/                   start · photos · icons · moments · effects ·
+                             consistency · perf · shoot · gate · copy-lint
+  references/                21 playbooks (layout-v4, copy-voice, motion, photos,
+                             scenes, gate, perf, system …)
+  library/                   palettes.json (traded colour systems), type.json
+  assets/                    starter.html, system.css, layout/style deals, icons,
+                             diagrams, scenes, moments, effects, objects
+  assets/photos/             photos.json — the index of 413 vetted photographs
+```
+
+### Verified working here
+
+```bash
+node .claude/skills/design-taste-frontend/scripts/photos.mjs list
+# → 413 photographs. Trades: cafe 20, hotel 39, bike 6, food 6, studio 5, office 3,
+#   shop 5, books 5, outdoors 31, wellness 8, farm 3 …
+
+node .claude/skills/design-taste-frontend/scripts/start.mjs deal --page tech
+# → palette studio-grey / sky-sand / blue-black-cornflower
+#   type    mona / epilogue / sora, tracking -4% at hero size
+```
+
+`start.mjs deal` writes a `.taste-skill/` state folder where it runs; that folder is
+gitignored (I deleted the stray one my test created at the repo root).
+
+### Two deliberate omissions
+
+1. **`assets/photos/img/` — 12 MB of JPEG/WebP files.** The 413-photo index is
+   committed (352 KB); the pixels are not. `photos.mjs fetch` reads them from there, so
+   a place/cafe/hotel page built from bundled frames needs them: copy them back from the
+   tag if you build one —
+   `curl -sL https://codeload.github.com/Leonxlnx/taste-skill/zip/refs/tags/v2.5.1 | …`
+2. **The `Stop` hook.** Like Impeccable's, it runs `gate.mjs --hook claude` at the end
+   of a session. Same reasoning: not committed. Arm it per build instead, which is what
+   the tool actually wants:
+
+```bash
+node .claude/skills/design-taste-frontend/scripts/gate.mjs --start site/index.html
+```
+
+The gate then holds the build until no fixable FAIL remains (three rounds max), and
+`consistency.mjs` / `perf.mjs` / `shoot.mjs` check the page in headless Chrome at
+1440 / 1024 / 768 / 390. Needs Node 22+ and a Chrome/Chromium — neither is in this
+sandbox, so those checks are for your machine.
+
+### Three layers now, no overlap
+
+| Skill | Answers |
+|---|---|
+| **UI/UX Pro Max** | *what* — palette, pairing, layout data for the product type (searchable) |
+| **Impeccable** | *is it good* — critique, audit, 62-rule anti-slop detector |
+| **Taste Skill** | *build it* — art direction, layout deals, real photos/icons, the finish gate |
