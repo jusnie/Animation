@@ -131,6 +131,8 @@ Ground rules the rest of this repo already implies:
 - **`media-chrome` is a custom element**, so it must be imported in a client component
   (`"use client"`) and referenced as `<media-controller>` / `<media-play-button>` —
   React 19 handles custom elements without the old `ref` workarounds.
+- **Icon naming**: `doticons` exports are all `*Doticon` (`AlarmDoticon`,
+  `CirclePlayDoticon`), never bare names.
 - **`site/node_modules` is 1.8 GB** and not committed. After a sandbox reset,
   `cd site && npm install` takes about a minute. This was verified twice.
 - **Astryx currently breaks on `three`-less imports and uses `<Theme>`, not

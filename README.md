@@ -36,7 +36,8 @@ site/              installed front-end stack for the episode site (no pages yet)
                    Stickman Video Director (MIT),
                    Papercut Explainer ×9 (MIT),
                    Auto Ontology MCP (Apache-2.0),
-                   AFFiNE / BlockSuite (MIT + EE)
+                   AFFiNE / BlockSuite (MIT + EE), mapcn (MIT),
+                   Front-End Checklist (MIT)
 ```
 
 ## Render

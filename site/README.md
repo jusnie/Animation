@@ -754,3 +754,46 @@ Substance is in [`docs/tailark/README.md`](../docs/tailark/README.md) and the bl
 in [`docs/tailark/index.json`](../docs/tailark/index.json). Short version: Dusk is a SaaS
 landing kit with no film, video or editorial blocks — the free ones worth a glance are
 footer, stats, FAQ and logo-cloud. Use it to calibrate spacing, not to build the page.
+
+## Three more: doticons, mapcn, Front-End Checklist
+
+### doticons 0.9.0 — installed
+
+`doticons` (MIT, 244 dot-matrix icons, 16 px and 32 px sets) in `site/`. Verified with
+esbuild (158 KB for a three-icon import, 0 errors).
+
+```tsx
+import { AlarmDoticon, CirclePlayDoticon } from "doticons/32";
+```
+
+**Every export is suffixed `Doticon`** — `Alarm` and `Play` do not exist; the play glyph
+is `CirclePlayDoticon`. Full note: [`docs/doticons.md`](../docs/doticons.md).
+
+Why: lucide is thin line art; doticons is chunky dots, which sits closer to a
+stick-figure film's grain. 244 icons is small — no clapperboard or subtitle glyph — so
+expect to use both sets.
+
+### mapcn — skill installed, components not
+
+`AnmolSaini16/mapcn` (MIT, 12.4k★) is shadcn-style map components on `maplibre-gl`.
+Committed: `.claude/skills/mapcn/` (SKILL.md + 3 references) and `maplibre-gl@6.18.0`.
+
+The component registry could **not** be fetched — `mapcn.dev` returns 000 from this
+sandbox, so `npx shadcn@latest add https://mapcn.dev/r/map.json` fails at the fetch. One
+command on a networked machine fixes that. Details, including the honest verdict
+(primitives yes, nine of ten blocks are SaaS dashboards): [`docs/mapcn.md`](../docs/mapcn.md).
+
+### Front-End Checklist — skill installed, MCP not
+
+`.claude/skills/frontend-checklist/` (MIT, 74.7k★): the aggregate skill over **386
+rules**, plus `references/categories.md` for the taxonomy.
+
+The workflow routes through the `frontendchecklist.io` MCP server (`review_code`,
+`audit_url`, `search_rules`…), which is not connected here. Everything in the skill's
+"Audit Stance" and rule-derived-highlights sections stands on its own though — it is
+evidence-first review discipline (don't flag decorative `alt=""`, don't infer intent from
+a fragment, prefer 1–2 strong findings over speculative breadth), and that part is worth
+reading before any audit.
+
+It overlaps Hallmark and Impeccable by design; the difference is that those two are
+*opinionated about taste*, while this one is a *platform-correctness* checklist.
