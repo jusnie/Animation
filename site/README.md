@@ -729,3 +729,28 @@ import "media-chrome";
 These are the pieces the portfolio templates in the wild are actually weak at. The
 research behind choosing them — what to read, what to skip and why — is in
 [`docs/PORTFOLIO-REFERENCE.md`](../docs/PORTFOLIO-REFERENCE.md).
+
+## Tailark "Dusk" — reference only, not installed
+
+[tailark.com/pages/dusk](https://tailark.com/pages/dusk) is a **shadcn registry** of
+marketing blocks, on a free tier plus paid page packs ($249–$499 one-time).
+
+**Could not be installed here:** `oss.tailark.com` and `tailark.com` are unreachable
+from this sandbox's shell — TLS sockets close before handshake, so even
+`npx shadcn@latest add https://oss.tailark.com/r/dusk-hero-section-1.json` fails at the
+fetch. This is a different block than the earlier shadcn one: the registry host itself is
+unreachable, not just `ui.shadcn.com`.
+
+On a normal network it is one command per block:
+
+```bash
+cd site && npx shadcn@latest add https://oss.tailark.com/r/dusk-hero-section-8.json
+```
+
+The blocks land in `src/components/` importing `@/components/ui/button` and
+`@/lib/utils`, both of which already exist here.
+
+Substance is in [`docs/tailark/README.md`](../docs/tailark/README.md) and the block list
+in [`docs/tailark/index.json`](../docs/tailark/index.json). Short version: Dusk is a SaaS
+landing kit with no film, video or editorial blocks — the free ones worth a glance are
+footer, stats, FAQ and logo-cloud. Use it to calibrate spacing, not to build the page.

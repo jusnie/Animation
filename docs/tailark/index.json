@@ -1,0 +1,23 @@
+{
+  "_note": "Index of Tailark FREE registry items captured from oss.tailark.com/r/<name>.json on 2026-11-13. The registry host is unreachable from the build sandbox (TLS blocked); the fetch_page tool can read it. Recorded so the block names are documented even when the JSON cannot be pulled by shadcn.",
+  "freeRegistryBase": "https://oss.tailark.com/r/",
+  "install": "cd site && npx shadcn@latest add https://oss.tailark.com/r/<item>.json",
+  "duskBlocks": {
+    "hero-section": ["dusk-hero-section-1","dusk-hero-section-2","dusk-hero-section-3","dusk-hero-section-4","dusk-hero-section-5","dusk-hero-section-6","dusk-hero-section-7","dusk-hero-section-8","dusk-hero-section-9","dusk-hero-section-10"],
+    "features": ["dusk-features-1"],
+    "integrations": ["dusk-integrations-1"],
+    "testimonials": ["dusk-testimonials-1","dusk-testimonials-2"],
+    "pricing": ["dusk-pricing-1","dusk-pricing-2"],
+    "logo-cloud": ["dusk-logo-cloud-1","dusk-logo-cloud-2","dusk-logo-cloud-3","dusk-logo-cloud-4"],
+    "content": ["dusk-content-1","dusk-content-2","dusk-content-3","dusk-content-4"],
+    "call-to-action": ["dusk-call-to-action-1","dusk-call-to-action-2"],
+    "faqs": ["dusk-faqs-1"],
+    "stats": ["dusk-stats-1","dusk-stats-2"],
+    "footer": ["dusk-footer-1","dusk-footer-2"],
+    "team": ["dusk-team-1","dusk-team-2"]
+  },
+  "duskPages": ["dusk/landing/one","dusk/landing/two","dusk/landing/three","dusk/landing/four","dusk/landing/five","dusk/landing/six","dusk/landing/seven","dusk/landing/eight","dusk/landing/nine","dusk/landing/ten"],
+  "otherKits": ["quartz","libre","grid-1","grid-2","dark"],
+  "previewQuery": "?fullscreen=true",
+  "note": "block counts for features/team/etc are from the dusk blocks index page; exact item names beyond hero-section were not individually verified."
+}

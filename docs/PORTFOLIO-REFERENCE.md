@@ -48,6 +48,7 @@ them knows about Mikay.
 | `adrianhajdin/award-winning-website` | 1.1k | (check) | The only high-star repo that teaches award-style scroll motion (GSAP + scroll triggers) |
 | `muxinc/media-chrome` | 2.8k | MIT | Its own docs are the best guide to a custom video skin |
 | `darkroomengineering/lenis` | 17.2k | MIT | Docs for integrating smooth scroll without breaking anchors or focus |
+| **Tailark "Dusk"** (site, not a repo) | — | free tier + paid | Dark marketing blocks on shadcn. Visual reference for spacing and restraint; the free registry items are installable one at a time. See `docs/tailark/` |
 
 Supporting, only if a 3D scene is ever actually wanted: `pmndrs/react-three-fiber`
 (33.7k, MIT) and `pmndrs/drei` (10.2k, MIT). For a hand-drawn stick-figure series, 3D is
