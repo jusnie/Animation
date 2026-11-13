@@ -625,3 +625,36 @@ Both are now installed and both are data-heavy-product systems. Honestly:
 
 Astryx's swizzle is the deciding feature: when a film page needs a component to look like
 *ours* rather than like a design system's, ejecting its source beats fighting its API.
+
+## Auto Ontology (NVIDIA) — semantic layer, MCP client
+
+[NVIDIA/auto-ontology](https://github.com/NVIDIA/auto-ontology) · Apache-2.0 · public beta ·
+12k★. A Python framework for a **semantic, graph-based reasoning layer over data**: it
+sits between an LLM and a warehouse so one reviewed definition of a business term
+replaces a fresh guess per query.
+
+Installed as `.claude/skills/auto-ontology-mcp/` (460 KB: SKILL.md, the MCP README,
+`docs/mcp.md`, the OpenAPI spec the server builds from, and the 4-dependency
+`pyproject.toml`).
+
+**What was verified:** the MCP server installs and boots in a Python 3.11 venv —
+
+```
+Starting Auto Ontology MCP server — version 1.2.0, listening on http://localhost:3003
+Server: auto-ontology, 1.2.0  (FastMCP 3.4.11)
+```
+
+It is a pure HTTP client of a deployment (no DB credentials, no secrets in its config;
+the deployment signs each caller in). Tools: `ask_question` — text-to-SQL through the
+glossary, returning the answer, the SQL and the rows — plus `search_terms`,
+`describe_table`, `check_answerable`. Everything reads; nothing writes.
+
+**What was not, and cannot be, installed:** `auto-ontology-server`. It requires Python
+**3.12–3.13**, ~450 packages including a git-based dependency, Postgres, and a Docker
+Compose stack with a FastAPI backend and a Next.js frontend. This sandbox has Python
+3.11, no Postgres, no Docker.
+
+`site/README.md` is the design-stack log; this belongs to the same running list because
+it is the only entry here about *data* rather than pixels. There is no MIKAY data set to
+put in an ontology yet — episode catalogue, upload queue and QA results would be the
+candidates once they are real.

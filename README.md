@@ -33,7 +33,8 @@ site/              installed front-end stack for the episode site (no pages yet)
                    Taste Skill (MIT), Hallmark (MIT),
                    Modern Web Guidance (Apache-2.0),
                    Stickman Video Director (MIT),
-                   Papercut Explainer ×9 (MIT)
+                   Papercut Explainer ×9 (MIT),
+                   Auto Ontology MCP (Apache-2.0)
 ```
 
 ## Render
