@@ -707,3 +707,25 @@ beat sheets and shot notes are written and diagrammed side by side, self-hosted,
 The practical route is the app (run it from the official image and import these markdown
 files), not embedding BlockSuite — that needs a document provider, a yjs worker and its
 own styling, and a film site does not have an editor-shaped hole.
+
+## Motion + video layer (installed)
+
+The one real gap in the original stack. All MIT, all verified bundling together
+(855 KB esbuild bundle, 0 errors):
+
+| Package | Version | What it does |
+|---|---|---|
+| `motion` | 14.14.0 | Framer Motion standalone — `whileInView`, layout animation, springs, `useScroll` |
+| `lenis` | 1.3.27 | Smooth scroll. Needs `lenis/dist/lenis.css`, which is not optional |
+| `media-chrome` | 4.19.5 | Web-component player (`<media-controller>`) with seek, PiP, captions |
+
+```tsx
+import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
+import "media-chrome";
+```
+
+These are the pieces the portfolio templates in the wild are actually weak at. The
+research behind choosing them — what to read, what to skip and why — is in
+[`docs/PORTFOLIO-REFERENCE.md`](../docs/PORTFOLIO-REFERENCE.md).
