@@ -834,3 +834,24 @@ import { useAval } from "@pixel-point/aval-react/lazy";   // runtime in its own 
 Why it is here: it is the only installed thing that answers *how the page shows motion*
 rather than *what the page should look like*. Verdict and the caveats (WebCodecs, lossy
 shadows vs the film grade) are in `docs/aval.md`.
+
+### Re-installed with the official installer (and why it is not an MCP)
+
+The upstream CLI can now do the install itself; verified here:
+
+```bash
+DISABLE_TELEMETRY=1 npx modern-web-guidance@latest install \
+    --agent claude-code --scope project -y
+# → ✓ modern-web-guidance (copied) → .claude/skills/modern-web-guidance
+```
+
+Two things learned: the agent id is **`claude-code`** (not `claude` — 79 ids are accepted
+and `claude` is not one of them), and the run writes a **`skills-lock.json`** at the repo
+root with `computedHash` of `SKILL.md`, which is a useful integrity pin. It also *deletes*
+`LICENSE` from the skill folder on reinstall — restored here.
+
+**This is a skill, not an MCP server.** There is no `.mcp.json` and no MCP server in the
+repo; the `webmcp/` guides are about implementing WebMCP *in your own web app*, not about
+exposing these guides. The interface is the `search` / `retrieve` / `legacy-scan` CLI,
+which is `npx`-runnable and needs no server.
+

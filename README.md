@@ -30,6 +30,7 @@ tools/             script data, SFX generator, mixer, video builder, VFX port
 render/            output
 site/              installed front-end stack for the episode site (no pages yet)
                    + docs/PORTFOLIO-REFERENCE.md: what to build it with and what to read
+skills-lock.json   integrity pin written by the modern-web-guidance installer
 .claude/skills/    skills: UI/UX Pro Max (MIT), Impeccable (Apache-2.0),
                    Taste Skill (MIT), Hallmark (MIT),
                    Modern Web Guidance (Apache-2.0),
