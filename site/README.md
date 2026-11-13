@@ -410,3 +410,55 @@ before scaffolding it.
 | **Impeccable** | *is it good* — 62-rule detector | ✔ npm engine |
 | **Taste Skill** | *build it* — direction + finish gate | ✔ non-browser tools |
 | **Hallmark** | *stop it* — hard floor, sloplint gate | ✔ sloplint |
+
+## Modern Web Guidance (Google Chrome)
+
+GoogleChrome's skill — **not** a design opinion. It is the current platform truth for
+HTML/CSS/client JS, because model weights carry obsolete patterns. Apache-2.0, cloned at
+`main`, at `.claude/skills/modern-web-guidance/` — 211 files, 2.4 MB, **209 guides**.
+
+```
+SKILL.md        the search-first workflow (search → retrieve → verify → disclose)
+guides/         209 guides in 17 disciplines:
+                  ui-behaviors 40 · performance 26 · ui-components 22 · visual-design 22
+                  forms 19 · css 18 · security 17 · ui-atoms 13 · html 8 · js 5
+                  accessibility 4 · built-in-ai 5 · pwa 2 · webmcp 3 · wasm 1 · privacy 1
+```
+
+### How it is meant to be used
+
+Search first, retrieve second — never answer from memory:
+
+```bash
+npx -y modern-web-guidance@latest search "light dismiss dialog"
+npx -y modern-web-guidance@latest retrieve "scrollytelling"
+
+# broad modernisation pass (covers ~20% of the corpus)
+npx -y modern-web-guidance@latest legacy-scan site/src --json
+```
+
+All three verified from this sandbox — `search` works, `retrieve "scrollytelling"`
+returns the CSS `view-timeline` implementation, and `legacy-scan` on `site/src` reports
+**0 findings from 33 qualified guides** (nothing to modernise yet).
+
+`retrieve` takes a guide **id** from search results, not a topic guess: asking for
+`"scroll-driven-animations"` errors with *no guide found*, while `"scrollytelling"`
+works. Search first.
+
+### Why it belongs in this stack
+
+The four design skills argue about taste. This one settles facts — `dialog` vs
+`role="dialog"`, `@starting-style` for entry animation, `content-visibility`,
+`fetchpriority`, container queries, view transitions, `:has()`, passkeys, sanitization,
+date/timezone handling. It is written as vanilla HTML/CSS/JS and expects adaptation to
+the framework, which is what `site/` is.
+
+Useful for MIKAY specifically: its `scroll-choreography`, `scrollytelling` and
+`scroll-driven` guides are the modern way to build an episode page where each section
+advances the story — CSS-driven, no JS scroll listeners, no jank.
+
+### Partially trimmed
+
+`skills/chrome-extensions/` (24 files, 122 KB) — browser-extension guidance, not
+relevant to a film site. Pull it back with the clone command if you ever write an
+extension.
