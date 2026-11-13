@@ -110,3 +110,52 @@ would rather keep it machine-local.
 - Every interactive state gets a transition: hover, press (`scale(0.98)`), focus ring.
 - Respect `prefers-reduced-motion` — ship the instant version first.
 - Motion should explain a change of state, not decorate a static page.
+
+## UI/UX Pro Max (design-intelligence skill)
+
+Installed at repo root, not inside `site/`:
+
+```
+.claude/skills/ui-ux-pro-max/      3.6 MB, 70 files, MIT
+  SKILL.md                        when to use it + the query contract
+  data/                           79 styles, 192 palettes, 74 font pairings,
+                                  119 UX guidelines, 105 icons, 25 charts, 22 stacks
+  scripts/search.py               the local search CLI (stdlib only)
+  references/                     quick-reference + pro-rules checklists
+```
+
+Source: `nextlevelbuilder/ui-ux-pro-max-skill` **v2.15.0** (MIT). The repo pins the
+release tag rather than `main`, so the data is reproducible.
+
+### Querying it
+
+```bash
+# whole design direction for a project
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py \
+        "animation studio short films portfolio dark cinematic" \
+        --design-system -p "MIKAY"
+
+# one concern
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "button press feedback" --domain ux
+
+# implementation detail for a known stack
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "card grid responsive" --stack nextjs
+```
+
+Domains: `style product color typography ux icons chart gsap landing`. Stacks include
+`nextjs react tailwind shadcn html-tailwind svelte astro vue nuxt flutter swiftui` and
+more. The script needs only Python 3 — no pip install.
+
+### The direction it recommended for this project
+
+Run against MIKAY it returned **Scroll-Triggered Storytelling** + **Motion-Driven**:
+pure-black canvas (`#000000`), off-white text (`#FAFAFA`), near-black cards (`#0C0C0C`),
+`#3F3F46` borders, and one high-contrast accent reserved for the CTA. That is a good
+match for a film page — dark theatre, content-first, motion carrying the story — and it
+does not clash with the yellow/raspberry identity already used in the films.
+
+**Agent wiring:** the skill's own installer (`npx ui-ux-pro-max-cli init --ai claude`)
+writes `SKILL.md` files into whichever agents it finds; it could not run here because
+this sandbox cannot reach `api.github.com` for its release index. The content it would
+have written is what is committed above, so nothing is missing — only the multi-agent
+plumbing is.

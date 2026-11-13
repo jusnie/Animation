@@ -29,6 +29,7 @@ story/             beat sheets, character bible, locked narration scripts
 tools/             script data, SFX generator, mixer, video builder, VFX port
 render/            output
 site/              installed front-end stack for the episode site (no pages yet)
+.claude/skills/    UI/UX Pro Max design-intelligence skill (vendored, MIT)
 ```
 
 ## Render
