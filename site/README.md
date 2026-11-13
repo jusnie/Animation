@@ -670,8 +670,9 @@ GitHub reports `NOASSERTION` for a reason:
 
 | Path | Licence |
 |---|---|
-| everything else (client, frontend, editor) | **MIT** |
-| `packages/backend`, `packages/common/native` | **AFFiNE Enterprise Edition** — production use requires AFFiNE's subscription terms |
+| everything else (client, frontend, editor) | **MIT** (`LICENSE-MIT`) |
+| `packages/backend`, `packages/common/native` | **AFFiNE Enterprise Edition** — *"may only be used in production, if you … have a valid AFFiNE Enterprise Edition subscription for the correct number of user seats"* |
+| anything served client-side (CSS, fonts, compiled client JS) | **MPL-2.0** — a clause that is easy to miss |
 
 So the editor is MIT and usable; **the server is not free for production**. Self-hosting
 means reading the EE licence first.
