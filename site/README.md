@@ -797,3 +797,40 @@ reading before any audit.
 
 It overlaps Hallmark and Impeccable by design; the difference is that those two are
 *opinionated about taste*, while this one is a *platform-correctness* checklist.
+
+## AVAL (`@pixel-point/aval-react` 1.0.2) — interactive video delivery
+
+[pixel-point/aval](https://github.com/pixel-point/aval) · MIT · 1.4k★. A web format and
+runtime for **short prerendered motion with a state machine**: loops, named states,
+authored triggers, bounded transitions, reversals, packed-alpha transparency. One
+logical animation ships as a codec bundle (`.avl` per codec), and the browser picks the
+first of **AV1 → VP9 → H.265 → H.264** that decodes.
+
+Installed (MIT, both verified bundling with 0 errors):
+
+| Package | Version | Role |
+|---|---|---|
+| `@pixel-point/aval-react` | 1.0.2 | `useAval()` + `AvalComponent` |
+| `@pixel-point/aval-element` | 1.0.3 | the custom element |
+
+```tsx
+import { useAval } from "@pixel-point/aval-react";        // eager, 991 KB
+import { useAval } from "@pixel-point/aval-react/lazy";   // runtime in its own chunk
+```
+
+**Two things to know before using it on a page:**
+
+1. **AVAL will not fall back by design.** No fallback content is created or revealed; if
+   WebCodecs is missing or no codec decodes, `prepare()` rejects with `AvalPlaybackError`
+   and the element fires one fatal `error` event. Attach that listener before
+   registering, branch on `failure.code`, and ship your own `<video>` fallback.
+2. **The compiler needs ffmpeg.** `@pixel-point/aval-compiler@1.1.0` (binary `avl`)
+   validates a `motion.json` and then stops at `ERROR FFMPEG_NOT_FOUND` here. The full
+   validated schema — eleven required top-level fields, `range` as an array,
+   `"playback": "loop"` not `"loop": true`, required `preset` and `crf` — is written out
+   in [`docs/aval.md`](../docs/aval.md), derived from the compiler's own error messages
+   rather than guessed.
+
+Why it is here: it is the only installed thing that answers *how the page shows motion*
+rather than *what the page should look like*. Verdict and the caveats (WebCodecs, lossy
+shadows vs the film grade) are in `docs/aval.md`.

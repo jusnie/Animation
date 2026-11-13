@@ -23,6 +23,7 @@ results.
 | `motion` | 14.14.0 | MIT | Framer Motion, standalone. `whileInView`, layout animation, springs, `useScroll` |
 | `lenis` | 1.3.27 | MIT | Smooth scroll. The difference between an intentional page and a janky one |
 | `media-chrome` | 4.19.5 | MIT | Web-component video player with seek, PiP and captions — not a bare `<video>` |
+| `@pixel-point/aval-react` | 1.0.2 | MIT | AVAL: interactive video with a state machine, codec ladder and packed alpha. See `docs/aval.md` |
 
 All three are installed in `site/` and verified to bundle together (855 KB esbuild
 bundle, no errors). Import paths:
