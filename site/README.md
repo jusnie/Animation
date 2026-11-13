@@ -159,3 +159,59 @@ writes `SKILL.md` files into whichever agents it finds; it could not run here be
 this sandbox cannot reach `api.github.com` for its release index. The content it would
 have written is what is committed above, so nothing is missing — only the multi-agent
 plumbing is.
+
+## Impeccable (design-quality skill + anti-pattern detector)
+
+Paul Bakaus's skill family — the "design vocabulary" layer that pairs with UI/UX Pro Max
+above. Also at repo root, also vendored from a pinned tag.
+
+```
+.claude/skills/impeccable/    2.3 MB, 60 files, Apache-2.0 — v4.9.0
+  SKILL.md                    the router: shape · audit · critique · animate ·
+                              bolder · quieter · polish · harden · typeset · …
+  reference/                  ~40 playbooks (critique, audit, polish, layout,
+                              typeset, colorize, animate, harden, craft-floor …)
+  scripts/impeccable          the engine shim (calls npx impeccable)
+.claude/agents/               4 sub-agents: finish-reviewer, documenter,
+                              asset-producer, manual-edit-applier
+```
+
+Source: `pbakaus/impeccable` tag **`skill-v4.9.0`** (Apache-2.0).
+
+### The detector actually runs here
+
+Unlike the skills' own installers, the detection engine installs from npm:
+
+```bash
+npx impeccable detect site/src            # regex pass over tsx/ts/css
+npx impeccable detect http://localhost:3000   # full pass on a running dev server
+npx impeccable detect --list-rules        # the 62 rules
+```
+
+Verified: on a test file containing `bg-gradient-to-r from-purple-500 to-pink-500`
+it fires `ai-color-palette` — *"Purple/violet gradients and cyan-on-dark are the most
+recognizable tells of AI-generated UIs."* On `site/src` today it reports **0
+anti-patterns**, which is expected: there are no pages yet, so there is nothing to
+grade. Run it again once real UI exists — the element-level rules (tiny text, low
+contrast, touch targets) need a parsed page and will be silent until then.
+
+### Not installed: the hooks
+
+Upstream ships a `.claude/settings.json` that runs the detector on every `Edit`/`Write`
+and again on `Stop`. I left it out deliberately: committing hooks into a shared repo
+means every clone starts shelling out to an npm binary on each edit, and it would fire
+on `tools/` when the real UI does not exist yet. Add it locally if you want it:
+
+```bash
+npx impeccable install -y --providers=claude --scope=project
+```
+
+(That installer downloads its bundle from `impeccable.style`, which this sandbox cannot
+reach — hence the vendored copy of the same tagged release.)
+
+### How the two skills divide the work
+
+- **UI/UX Pro Max** — searchable data: which palette, which pairing, which layout for
+  this kind of product. Answers *what*.
+- **Impeccable** — judgement and enforcement: critique it, grade it, catch the AI tells,
+  make it bolder or quieter. Answers *is this good, and how do I fix it*.
