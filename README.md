@@ -36,6 +36,7 @@ skills-lock.json   integrity pin written by the modern-web-guidance installer
                    Modern Web Guidance (Apache-2.0),
                    Stickman Video Director (MIT),
                    Papercut Explainer ×9 (MIT),
+                   UI SDK / vercel-labs (Apache-2.0),
                    Auto Ontology MCP (Apache-2.0),
                    AFFiNE / BlockSuite (MIT + EE), mapcn (MIT),
                    Front-End Checklist (MIT)

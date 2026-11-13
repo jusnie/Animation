@@ -22,6 +22,8 @@
     "@radix-ui/react-tooltip": "latest",
     "@radix-ui/themes": "3.3.0",
     "@stylexjs/stylex": "^0.19.2",
+    "@ui-sdk/core": "^0.1.0-beta.1",
+    "@ui-sdk/react": "^0.1.0-beta.1",
     "class-variance-authority": "latest",
     "clsx": "latest",
     "doticons": "^0.9.0",

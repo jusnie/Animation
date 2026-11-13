@@ -855,3 +855,37 @@ repo; the `webmcp/` guides are about implementing WebMCP *in your own web app*, 
 exposing these guides. The interface is the `search` / `retrieve` / `legacy-scan` CLI,
 which is `npx`-runnable and needs no server.
 
+
+## UI SDK (`@ui-sdk/react` 0.1.0-beta.1) — behaviours, not looks
+
+[vercel-labs/ui](https://github.com/vercel-labs/ui) · **Apache-2.0** (not MIT) · 3.4k★ ·
+beta. Keyboard navigation, focus, selection, dismissal, popups, drag and drop, and the
+ARIA they need — with **no styles of their own**. React, Vue, Svelte, Solid and web
+component adapters over one core.
+
+```tsx
+import { Button } from "@ui-sdk/react/button";
+import { Dialog } from "@ui-sdk/react/dialog";
+```
+
+Installed: `@ui-sdk/react` + `@ui-sdk/core` (zero deps; peers react, react-dom,
+@types/react). Verified with esbuild: 386 KB for two components, **0 errors**.
+
+Four things to know:
+
+1. **Subpath-only imports** — there is no root export. `./button`, `./dialog`,
+   `./popover`, `./menu`, `./autocomplete`, … Tree-shaking is structural.
+2. **Docs ship in the package**: `node_modules/@ui-sdk/react/docs/` (2.5 MB, 55 component
+   pages, `llms.txt` as index). Read those instead of the website — they match the
+   installed version.
+3. **Licence is Apache-2.0**, unlike the MIT of the rest of this stack: patent grant plus
+   a NOTICE obligation. Keep `LICENSE`/`NOTICE` with any shipped code.
+4. **Beta at 0.1.0-beta.1** — pin it.
+
+The skill is committed too: `.claude/skills/ui-sdk/` (SKILL.md + 7 references).
+
+Where it fits: this is the only component layer in `site/` that **cannot impose a look**,
+which is exactly right under a palette set by `tools/vfx.py` and Hallmark's Darkroom —
+usable for dialogs, popovers, menus and focus management under a hand-built page. It is
+not a replacement for shadcn and not a page in itself. Detail:
+[`docs/ui-sdk.md`](../docs/ui-sdk.md).
