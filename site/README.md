@@ -971,3 +971,23 @@ iOS `.app` on `macos-latest`. Free on public repos, no credits. Apple's $99/yr a
 review remain regardless of which CI you use.
 
 Detail: [`docs/ios-android.md`](../docs/ios-android.md).
+
+## xtool — researched, cannot install (and would not fit Capacitor anyway)
+
+[xtool-org/xtool](https://github.com/xtool-org/xtool) · MIT · **15,482★** — a real
+cross-platform Xcode replacement: builds SwiftPM into iOS `.app`, signs and installs over
+USB via `usbmuxd`, and drives Apple Developer Services from the CLI. Ships a Dockerfile
+(`swift:6.4.2-jammy`) and an AppImage.
+
+**Blocked here:** no Swift toolchain (`swift: command not found`), `swift.org` /
+`download.swift.org` → **000**, `usbmuxd` not in Debian's repos
+(`E: Unable to locate package usbmuxd`), no Docker. Not installable from this sandbox even
+with root — the toolchain host is on the egress blocklist.
+
+**And a fit problem that survives on a real machine:** xtool takes **SwiftPM** packages;
+Capacitor produces an **Xcode project**. There is no `xtool build MyApp.xcodeproj` path
+(`DevCommand.swift` plans SwiftPM and either packs a `.app` or generates an xcodeproj for
+editors). So for this app the free `macos-latest` GitHub Actions job is the correct route;
+xtool is the right tool only if you write a native SwiftUI app instead.
+
+Detail: [`docs/xtool.md`](../docs/xtool.md).
