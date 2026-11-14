@@ -932,3 +932,17 @@ compile, so — like AVAL — it is installed and readable but cannot output her
 README is `README.en.md`.
 
 Detail: [`docs/scroll-choreography.md`](../docs/scroll-choreography.md).
+
+## Costing tool parts list (research, not built)
+
+See [`docs/costing-tool-stack.md`](../docs/costing-tool-stack.md). The one-line version:
+
+- **Licence trap:** `midday` (15k★), `easy-invoice-pdf`, `invoicerr` are all **AGPL-3.0** —
+  unusable for a paid SaaS. `al1abb/invoify` (6,391★, **MIT**) is the invoicing app worth
+  studying instead.
+- **Excel works today, here:** `haris-musa/excel-mcp-server` (4,301★, MIT) pip-installs and
+  registers **44 tools** — verified in this workspace. `goal_seek` (backwards costing),
+  `trace_formula`, pivot tables, charts, CSV import/export.
+- **Sheets needs Vercel:** `taylorwilsdon/google_workspace_mcp` (3,515★, MIT) or `drive.file`
+  scoped OAuth + Google Picker. Cannot be tested from this sandbox.
+- **AI:** `vercel/ai` `generateObject` + a Zod schema — one endpoint, not a chatbot.
