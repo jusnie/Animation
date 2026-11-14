@@ -3,7 +3,7 @@
 Source: `jusnie/Tools-Skills`, branch `arena/6265089e-animation`, path `.claude/`.
 **11 web-development skills + 4 subagents · 2,111 files · 34 MB payload (~39 MB on disk; 2,111 small files) · sparse clone, so you never pull the repo's 162 MB.**
 
-It also wires in the **88-style design catalog** (glassmorphism, brutalism, bento, Y2K, HUD, liquid glass, editorial…) and a **verified scroll/motion toolkit** (Lenis 1.3.27, GSAP 3.15.1, 17 GSAP presets).
+It also wires in the **88-style design catalog** (glassmorphism, brutalism, bento, Y2K, HUD, liquid glass, editorial…), a **verified scroll/motion toolkit** (Lenis 1.3.27, GSAP 3.15.1, 17 presets), **SVG + font sources** (1,934 families, 74 pairings, 1,617 icons), **design reference sites**, and a **senior frontend guide subagent** that asks what you want before it changes anything.
 
 Paste the block in **Part A** into your friend's AI (Claude Code, Cursor, or anything with shell access). It asks one question — project-level or user-level — then installs and verifies.
 
@@ -116,6 +116,16 @@ MOTION DEPENDENCY POLICY
   - Lenis honors prefers-reduced-motion by default (respectReducedMotion defaults to
     true). Do not set it to false.
 
+STEP 9 — install the guide subagent. Write this file verbatim to
+  <TARGET>/.claude/agents/senior-frontend-guide.md
+Its full text is in Part H of the document I gave you. Do not paraphrase it. This agent is
+what enforces "ask before changing anything": it interviews, reads, plans, and refuses to
+edit until approved.
+
+STEP 10 — ask me before touching CLAUDE.md (it lives outside .claude/). If I agree, append
+the CHANGE-FREEZE PROTOCOL block from Part H to it so the rules apply to every task, not
+only when the subagent is invoked.
+
 RULES
   - These skills are third-party MIT / Apache-2.0 works. Keep their LICENSE files and do
     not strip attribution. Do not relicense them as your own.
@@ -124,6 +134,8 @@ RULES
   - Do not run any skill's install script, npm install, or pip install without asking.
   - Do not delete or rewrite anything in <TARGET> outside .claude/.
   - If the clone or sparse-checkout fails twice, stop and report the exact error.
+  - Do not edit any project file before I approve a written plan. Review-only means zero
+    changes. If I say "just fix it", scope it to the files I named and nothing else.
 
 ````
 
@@ -304,11 +316,210 @@ For a whole cinematic landing page, **scroll-craft** plans the journey and build
 
 ---
 
-## Part E — notes
+## Part E — SVG & icons
+
+Two layers: the curated data you already installed, and the packages you install per project.
+
+### Already local (nothing to install)
+
+| File | Rows | What's inside |
+|---|---|---|
+| `ui-ux-pro-max/data/icons.csv` | 105 | Curated icons with `Icon Name`, `Library`, **`Import Code`**, `Usage`, `Best For`, `Style` |
+| `ui-ux-pro-max/data/phosphor-icons-upstream.json` | 1,512 | Full Phosphor set, for lookup |
+
+`Import Code` is the useful column — a real row reads:
+
+```text
+arrow-left   Phosphor   import { ArrowLeft } from '@phosphor-icons/react'   Back button breadcrumb navigation
+```
+
+The AI reads a copy-ready import instead of guessing a component name.
+
+### Icon libraries — versions verified 2026-11-14
+
+| Package | Latest | Notes |
+|---|---|---|
+| **lucide-react** | 1.73.0 | shadcn/ui default; 24×24 stroke, `currentColor` |
+| **@phosphor-icons/react** | 2.1.10 | Six weights per icon — the set `icons.csv` indexes |
+| **@heroicons/react** | 2.2.0 | Tailwind team; outline + solid |
+| **@tabler/icons-react** | 3.52.0 | ~5,000 icons, very consistent stroke |
+| **iconoir-react** | 7.12.2 | Rounded, distinctive |
+| **simple-icons** | 16.37.0 | Brand/logo marks only |
+
+### The SVG pipeline
+
+| Package | Latest | Use |
+|---|---|---|
+| **svgo** | 4.1.0 | Strip metadata and whitespace from exports — commonly 40–60% smaller |
+| **@svgr/cli** | 8.1.0 | SVG → React component with props |
+
+**Sprite technique:** for site chrome, one inline `<symbol>` set plus `<use href="#id">` beats twenty separate requests. (The portfolio I audited already does this correctly for its six service icons.)
+
+### Animated vector
+
+| Package | Latest | Use |
+|---|---|---|
+| **lottie-web** | 5.13.0 | After Effects → JSON, renders to canvas/SVG |
+| **@lottiefiles/dotlottie-web** | 0.83.2 | Lighter Lottie player (WASM) |
+| **@rive-app/react-canvas** | 4.39.0 | Interactive state-machine animation |
+
+### Rules
+- If `icons.csv` or a library has the icon, don't hand-draw a 40-line path.
+- `stroke="currentColor"` / `fill="currentColor"` so icons inherit the theme.
+- Decorative icons: `aria-hidden="true"` **and no `aria-label`** — a labelled icon sitting beside a heading is announced twice.
+- Ship a `viewBox`; never fixed `width`/`height` only.
+- No `filter: drop-shadow()` on an SVG that animates — it re-rasterizes every frame.
+
+---
+
+## Part F — Fonts & typography
+
+### Already local (nothing to install)
+
+| File | Rows | Columns that matter |
+|---|---|---|
+| `data/google-fonts.csv` | **1,934** families | Family · Category · Stroke · Classifications · Keywords · Styles · **Variable Axes** · Subsets · Designers |
+| `data/typography.csv` | **74** pairings | Pairing Name · Category · Heading · Body · Mood · Best For · **Google Fonts URL** · **CSS Import** |
+| `data/google-font-licenses.json` | — | Per-family license, so you can check redistribution |
+| `data/ux-guidelines.csv` | **119** | The UX rule corpus |
+
+Real pairings from the file: *Classic Elegant* (Playfair Display + Inter) · *Modern Professional* (Poppins + Open Sans) · *Tech Startup* (Space Grotesk + DM Sans).
+
+### Self-hosting beats the Google CDN
+
+| Package | Latest | Notes |
+|---|---|---|
+| **@fontsource-variable/inter** | 5.3.0 | One variable file, all weights |
+| **@fontsource/inter** | 5.3.0 | Static weights for older fallback |
+| **geist** | 1.9.2 | Vercel's family, ships `geist/font` |
+| Next.js | built-in | `next/font` self-hosts, preloads, and prevents CLS for free |
+
+### Rules
+- **Two families maximum** — one display, one text. Orbitron + JetBrains Mono + cyan glow is the single most generated combination of the last two years.
+- **Variable over static**: one 30–60 KB file replaces four weight files.
+- `font-display: swap`, and preload only the face used above the fold.
+- Subset to `latin` unless the copy needs otherwise.
+- A render-blocking `<link>` to `fonts.googleapis.com` costs a cross-origin round trip before first paint. Self-host or accept it knowingly.
+- Icon fonts are not icons — use SVG.
+
+---
+
+## Part G — Where to get design reference
+
+Research **before** building. Take the idea, never the markup.
+
+| Site | Best for |
+|---|---|
+| **Awwwards** | Award-winning sites: motion, craft, interaction detail |
+| **Godly** | Curated high-craft web design |
+| **Land-book** | Landing-page gallery, filterable by style and industry |
+| **SiteInspire** | Editorially curated web design |
+| **Httpster** | Modern site gallery, strong typography |
+| **Lapa Ninja** | Landing pages + free resources |
+| **One Page Love** | Single-page sites specifically |
+| **Mobbin** | Real product UI patterns, mobile and web |
+| **Refero** | Screenshots of real product interfaces |
+| **Collect UI** | Patterns grouped by job — onboarding, empty states, pricing |
+| **Page Flows** | Recorded user flows, not just stills |
+| **Pttrns / Screenlane** | Mobile screen patterns |
+| **Typewolf** | Fonts in the wild, pairing judgement |
+| **Fonts In Use** | Typography in production projects |
+| **Hoverstat.es** | Hover and micro-interaction states |
+| **Dark Mode Design** | Dark-theme references |
+| **Minimal Gallery** | Restrained, minimal work |
+| **Dribbble / Behance** | Concept exploration only — see caution |
+| **web.dev · MDN · Can I Use** | Verify a technique, not inspiration |
+
+**Give the AI this caution:** gallery shots are art-directed, not engineered. A Dribbble card routinely fails contrast, keyboard focus and mobile. Take the idea, then run it through `styles.csv`, `ux-guidelines.csv` and the accessibility gates. Never copy markup, copy or assets.
+
+---
+
+## Part H — "Ask first": the change-freeze protocol + the senior guide agent
+
+### What already exists, and what doesn't
+
+The bundled skills have *partial* consent rules — `impeccable` says "Ask before replacing factual copy or adding claims", `hallmark` won't touch an existing design unless you name it. But **no skill enforces a hard freeze**: told to "polish this page", a model will start editing.
+
+That's the gap this closes — one explicit protocol, plus a subagent that owns it.
+
+### The protocol — append to `CLAUDE.md` so it applies to every task
+
+```text
+CHANGE-FREEZE PROTOCOL
+1. ASK FIRST. Before reading code, ask up to 4 questions: goal, audience, must-keep,
+   definition of done. One round only — do not interrogate.
+2. READ ONLY. Inspect the codebase after the answers. No edits while inspecting.
+3. PLAN, THEN WAIT. Produce: what I would change, which files, why, what I would leave
+   alone, and the risk. End with "Approve?".
+4. SCOPE LOCK. Edit only files named in the approved plan. If a new file becomes
+   necessary, stop and ask.
+5. NEVER SILENTLY: rewrite copy, delete content, rename a class across files, add a
+   dependency, reformat untouched code, or "tidy" anything outside scope.
+6. DESTRUCTIVE = EXPLICIT. Deleting files or branches, force-push, migrations, major
+   version bumps: confirm each one by name.
+7. REPORT AFTER. Diff summary: changed / not changed / deliberately deferred, plus any
+   new risk introduced.
+8. MODES. review = zero edits. plan = zero edits. apply = edits only after approval.
+   Nothing but an explicit "go ahead" unlocks apply.
+```
+
+### The subagent — save as `.claude/agents/senior-frontend-guide.md`
+
+```markdown
+---
+name: senior-frontend-guide
+description: Use when a frontend task needs a plan, a review, or a second opinion before any code changes. Interviews the user, reads the codebase, proposes a scoped plan, and refuses to edit until approved. Invoke for "review this page", "what would you improve", "plan this rebuild", or before running any polish/redesign skill.
+tools: Read, Grep, Glob, Bash
+---
+
+You are a senior frontend engineer acting as a guide, not an implementer. You have shipped
+production design systems, chased down INP regressions, and been in the room when a
+"quick polish" broke checkout. Your value is judgement and restraint.
+
+OPERATING LOOP
+
+1. Ask up to four questions — never more:
+   - What is this page for, and who is the visitor?
+   - What must not change: copy, brand, structure, analytics, SEO?
+   - What does "done" mean — review only, plan only, or shipped code?
+   - What is the worry you already have about it?
+   If the user says "just look at it", treat it as review mode and say so out loud.
+
+2. Read before judging: layout, CSS system, JS, assets, and actual rendered behaviour.
+   Quote evidence — line numbers, measured widths, real byte counts. No vibes.
+
+3. Judge in this order, naming the skill behind each finding:
+   - Correctness and accessibility → frontend-checklist, impeccable audit
+   - Platform API validity → modern-web-guidance
+   - Type, colour, spacing, system → ui-ux-pro-max data + hallmark
+   - Generic / model-default feel → design-taste-frontend + hallmark
+   - Motion and scroll → scroll-craft + motion.csv presets
+   - Weight and speed → measure: asset bytes, blocking requests, animated layers,
+     rAF loops. Never assert a performance claim you did not measure.
+
+4. Deliver a plan, not an edit. P0/P1/P2, each item with file, change, reason, and the
+   test that proves it improved. State plainly what you would NOT touch.
+
+5. Stop and ask for approval. In review and plan modes you make zero edits, ever.
+
+RULES
+- Never rewrite the user's copy without asking; their words are product decisions.
+- Never add a dependency to fix what a platform API already does.
+- Never claim an accessibility or performance win you have not verified.
+- Destructive actions get named and confirmed one by one.
+- Prefer the smallest change that removes the problem.
+- If you disagree with the direction, say so once with evidence, then build what was asked.
+```
+
+**How to use it:** run `senior-frontend-guide` first, get the plan, approve it, *then* let `impeccable` or `design-taste-frontend` touch files. The guide decides what to do; the skills do the craft.
+
+---
+
+## Part I — notes
 
 - **Scope.** Project-level (`./.claude`) keeps it per-repo; user-level (`~/.claude`) makes every project see it. Claude Code reads both; `.agents/skills/` is the alternative path some tools use.
 - **No `node_modules`, no build step.** Skills are Markdown + static assets + two `.mjs` checkers. Nothing to compile.
 - **The gate is the good part.** `design-taste-frontend/scripts/gate.mjs` is a real browser checker — it's what turns "looks generic" into a pass/fail. Node 18+ to use it.
 - **Licenses travel with the files.** MIT for design-taste, hallmark, ui-ux-pro-max, frontend-checklist, scroll-craft, react-kino, oil-motion, mapcn; Apache-2.0 for impeccable, modern-web-guidance, ui-sdk. Keep the `LICENSE*` files when redistributing — the installer instructs the AI to preserve them.
-- **Verified 2026-11-14:** npm versions from `registry.npmjs.org`; Lenis API/CSS/exports read from the `lenis-1.3.27.tgz` tarball; the style catalog read from `styles.csv` (88 rows, catalog verified 2026-08-13).
+- **Verified 2026-11-14:** npm versions from `registry.npmjs.org`; Lenis API/CSS/exports read from the `lenis-1.3.27.tgz` tarball; local data counted directly — `styles.csv` 88 rows (50 active / 29 supplemental / 9 deprecated), `icons.csv` 105, `phosphor-icons-upstream.json` 1,512, `google-fonts.csv` 1,934, `typography.csv` 74, `ux-guidelines.csv` 119.
 - **Runtime:** 34 MB payload / ~39 MB on disk · 2,111 files · sparse clone of one branch. First clone pulls only those paths (`--filter=blob:none --sparse`), not the repo's 162 MB of renders.
