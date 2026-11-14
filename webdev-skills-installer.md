@@ -3,7 +3,7 @@
 Source: `jusnie/Tools-Skills`, branch `arena/6265089e-animation`, path `.claude/`.
 **11 web-development skills + 4 subagents · 2,111 files · 34 MB payload (~39 MB on disk; 2,111 small files) · sparse clone, so you never pull the repo's 162 MB.**
 
-It also wires in the **88-style design catalog** (glassmorphism, brutalism, bento, Y2K, HUD, liquid glass, editorial…), a **verified scroll/motion toolkit** (Lenis 1.3.27, GSAP 3.15.1, 17 presets), **SVG + font sources** (1,934 families, 74 pairings, 1,617 icons), **design reference sites**, and a **senior frontend guide subagent** that asks what you want before it changes anything.
+It also wires in the **88-style design catalog** (glassmorphism, brutalism, bento, Y2K, HUD, liquid glass, editorial…), a **verified scroll/motion toolkit** (Lenis 1.3.27, GSAP 3.15.1, 17 presets), **SVG + font sources** (1,934 families, 74 pairings, 1,617 icons), **design reference sites**, and a **senior frontend guide subagent** that asks what you want before it changes anything — plus **auto-browsing of GitHub and the web**, so it brings you options instead of guessing.
 
 Paste the block in **Part A** into your friend's AI (Claude Code, Cursor, or anything with shell access). It asks one question — project-level or user-level — then installs and verifies.
 
@@ -125,6 +125,16 @@ edit until approved.
 STEP 10 — ask me before touching CLAUDE.md (it lives outside .claude/). If I agree, append
 the CHANGE-FREEZE PROTOCOL block from Part H to it so the rules apply to every task, not
 only when the subagent is invoked.
+
+STEP 11 — research and present options before you build. Do not design from memory.
+  a) If you have web/browser tools: browse, using the query patterns in Part I.
+  b) If you have a shell with `gh` authenticated: use the GitHub commands in Part I.
+  c) If you have neither: say so plainly, fall back to the local catalogs, and ask me for
+     links or screenshots. Never cite a reference you did not actually open.
+  Then give me 2-3 directions with tradeoffs and WAIT for my pick. Aesthetic decisions
+  are mine; you supply the evidence.
+  Vet every repo before recommending it: license, archived, last push, open issues, deps,
+  accessibility. Never recommend something you have not opened.
 
 RULES
   - These skills are third-party MIT / Apache-2.0 works. Keep their LICENSE files and do
@@ -515,11 +525,105 @@ RULES
 
 ---
 
-## Part I — notes
+## Part I — Auto-browse GitHub & the web, then let the user choose
+
+Designing from memory is how every model produces the same page. This part makes the AI **go look, bring back candidates, and hand the aesthetic decision to you** — with the taste skills as the scoring rubric.
+
+### Tool reality check — say which one you have
+
+| Capability | Do this |
+|---|---|
+| Browser / web tools | Browse. Use the query patterns below. |
+| Shell with `gh` authenticated | Use the GitHub commands below (`gh auth status` to confirm). |
+| Neither | Say so, use the local catalogs (Parts C–F), and ask the user for links or screenshots |
+
+Never cite a reference you didn't open. A hallucinated inspiration link is worse than no link.
+
+### GitHub browsing — commands verified 2026-11-14
+
+```bash
+# 1. find candidates, ranked by stars
+gh search repos "scroll animation" --sort stars --limit 20 \
+  --json fullName,description,stargazersCount,updatedAt,license
+
+# 2. sweep topics / awesome lists
+gh search repos --topic=awesome-design --limit 10 --json fullName,stargazersCount
+
+# 3. how did someone actually implement it?
+#    NOTE: `gh search code` does not exist — code search is REST only
+gh api "search/code?q=lenis+ScrollTrigger+language:ts&per_page=10" \
+  --jq '.items[] | "\(.repository.full_name)  \(.path)"'
+
+# 4. vet a repo before you recommend it
+gh api repos/OWNER/REPO --jq \
+  '{license:.license.spdx_id, archived, stars:.stargazers_count,
+    pushed:.pushed_at, issues:.open_issues_count, forks:.forks_count}'
+```
+
+**Rate limits measured today (authenticated):** search **30 req/min**, code search **10 req/min** (it is a separate quota). Cache what you find; never loop these.
+
+### Vetting rubric — a repo passes or it isn't an option
+
+| Check | Pass | Reject / flag |
+|---|---|---|
+| **License** | MIT · Apache-2.0 · BSD · ISC | none at all · `NOASSERTION` · GPL/AGPL for code you ship |
+| **Archived** | `false` | `archived: true` = dead project |
+| **Last push** | within ~18 months | stale |
+| **Stars vs activity** | active | 5k stars, last commit 2022 |
+| **Open issues** | proportionate | thousands open, unmaintained |
+| **Deps & types** | typed, tree-shakeable | pulls a framework to do one thing |
+| **Accessibility** | keyboard + ARIA in the source | mouse-only |
+
+**Licence honesty:** a repo with **no licence is not usable** — default is all rights reserved. **GPL/AGPL in a shipped front end** carries obligations MIT does not; flag it, never copy silently. `NOASSERTION` means the licence file needs reading by a human. When you do adapt something, record repo + commit + licence in a `CREDITS.md`.
+
+### Web browsing — query patterns by intent
+
+| You need | Search like | Best source |
+|---|---|---|
+| A visual direction | `"<style> website examples"` | Awwwards · Land-book · Godly · SiteInspire |
+| A component pattern | `"<component> UX pattern best practice"` | Mobbin · Collect UI · Page Flows |
+| Correct API usage | `"<api> mdn"` / `"<feature> web.dev"` | MDN · web.dev |
+| Browser support | `"<feature> caniuse"` | Can I Use |
+| Type pairing judgement | `"<font> pairing alternatives"` | Typewolf · Fonts In Use |
+| Real implementation | `"<thing> github"` then the GitHub commands above | GitHub code search |
+| Library weight | `"<lib> bundle size"` | bundlephobia |
+
+### The selection protocol — the user picks, the AI scores
+
+1. **Brief in one sentence:** goal, audience, must-not-change (from Part H's questions).
+2. **Gather 3–5 candidates** from GitHub and the web. For each: what it is, why it might fit, licence, weight, risk.
+3. **Score them with the skills, not vibes:**
+   - `hallmark` / `design-taste-frontend` → does it avoid model defaults, or is it the generic look?
+   - `ui-ux-pro-max` `styles.csv` → does it match a real style *and* that style's constraints?
+   - `modern-web-guidance` → is this the modern platform way to do it?
+   - `frontend-checklist` → a11y and performance red flags
+4. **Present 2–3 directions, never one answer.** A comparison table with tradeoffs. Never make an aesthetic choice on the user's behalf.
+5. **Wait for the pick**, then fold it into the approved plan (Part H).
+6. **Record provenance:** decision + sources into `DESIGN.md` or `docs/decisions.md`, so the next session doesn't re-litigate it.
+
+### What "taste" means here — four tests, so it isn't a vibe
+
+Every candidate gets scored on:
+
+- **Distinct** — could you name the site from the screenshot alone? If it looks like every other AI portfolio, it fails.
+- **Coherent** — one system (type scale, spacing, radius, colour) or a pile of one-offs?
+- **Restrained** — one signature move, not five competing effects.
+- **Earned** — does each effect map to content (motion showing hierarchy, glass showing layering), or is it decoration?
+
+### Anti-patterns
+- Presenting 10 options. Three, maximum.
+- Recommending the most-starred repo without opening it.
+- Cloning a repo's design wholesale — take the idea, write your own code.
+- Browsing *after* deciding. Research is step 2, not step 9.
+- Forgetting the licence check because the demo looked good.
+
+---
+
+## Part J — notes
 
 - **Scope.** Project-level (`./.claude`) keeps it per-repo; user-level (`~/.claude`) makes every project see it. Claude Code reads both; `.agents/skills/` is the alternative path some tools use.
 - **No `node_modules`, no build step.** Skills are Markdown + static assets + two `.mjs` checkers. Nothing to compile.
 - **The gate is the good part.** `design-taste-frontend/scripts/gate.mjs` is a real browser checker — it's what turns "looks generic" into a pass/fail. Node 18+ to use it.
 - **Licenses travel with the files.** MIT for design-taste, hallmark, ui-ux-pro-max, frontend-checklist, scroll-craft, react-kino, oil-motion, mapcn; Apache-2.0 for impeccable, modern-web-guidance, ui-sdk. Keep the `LICENSE*` files when redistributing — the installer instructs the AI to preserve them.
-- **Verified 2026-11-14:** npm versions from `registry.npmjs.org`; Lenis API/CSS/exports read from the `lenis-1.3.27.tgz` tarball; local data counted directly — `styles.csv` 88 rows (50 active / 29 supplemental / 9 deprecated), `icons.csv` 105, `phosphor-icons-upstream.json` 1,512, `google-fonts.csv` 1,934, `typography.csv` 74, `ux-guidelines.csv` 119.
+- **Verified 2026-11-14:** npm versions from `registry.npmjs.org`; Lenis API/CSS/exports read from the `lenis-1.3.27.tgz` tarball; local data counted directly — `styles.csv` 88 rows (50 active / 29 supplemental / 9 deprecated), `icons.csv` 105, `phosphor-icons-upstream.json` 1,512, `google-fonts.csv` 1,934, `typography.csv` 74, `ux-guidelines.csv` 119; every GitHub command in Part I run for real (and `gh search code` confirmed *not* to exist), with live rate limits 30/min search, 10/min code search.
 - **Runtime:** 34 MB payload / ~39 MB on disk · 2,111 files · sparse clone of one branch. First clone pulls only those paths (`--filter=blob:none --sparse`), not the repo's 162 MB of renders.
