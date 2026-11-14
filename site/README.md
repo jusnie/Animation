@@ -946,3 +946,28 @@ See [`docs/costing-tool-stack.md`](../docs/costing-tool-stack.md). The one-line 
 - **Sheets needs Vercel:** `taylorwilsdon/google_workspace_mcp` (3,515★, MIT) or `drive.file`
   scoped OAuth + Google Picker. Cannot be tested from this sandbox.
 - **AI:** `vercel/ai` `generateObject` + a Zod schema — one endpoint, not a chatbot.
+
+## Capacitor 8.6.2 — one web app, iOS + Android + desktop
+
+Installed because a paid "build iOS without a Mac" service is not something you can
+install, and the free path is the same structure. All MIT.
+
+```
+@capacitor/core  @capacitor/cli  @capacitor/ios  @capacitor/android   8.6.2
+site/capacitor.config.ts        webDir: 'out'  (Next.js static export)
+site/ios/App/App.xcodeproj      committed — open in Xcode
+site/android/app/build.gradle   committed — open in Android Studio
+```
+
+Verified here: `cap add ios` / `cap add android` both succeeded, and `cap sync` copied a
+test `out/index.html` into `ios/App/App/public/` **and** `android/app/src/main/assets/public/`.
+Only the native compilers are absent (no Xcode, no Android SDK, neither installable in
+this sandbox).
+
+Live reload on device: `CAP_SERVER_URL=http://<lan-ip>:3000 npm run dev`.
+
+Builds: `.github/workflows/mobile-builds.yml` — Android APK/AAB on `ubuntu-latest`, unsigned
+iOS `.app` on `macos-latest`. Free on public repos, no credits. Apple's $99/yr and App Store
+review remain regardless of which CI you use.
+
+Detail: [`docs/ios-android.md`](../docs/ios-android.md).

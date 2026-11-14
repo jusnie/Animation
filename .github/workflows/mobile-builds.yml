@@ -1,0 +1,133 @@
+name: Mobile builds (iOS + Android)
+
+# What this replaces: a paid "build iOS without a Mac" service. GitHub's
+# `macos-latest` runner is an Apple machine, free for public repos and covered by the
+# 2,000 free minutes/month on private ones.
+#
+# iOS:   produces an UNSIGNED .app archive. Signing needs an Apple Developer account
+#        ($99/yr) plus certificates stored as secrets — see the `ios-sign` notes below.
+# Android: produces a debug .apk, and a release .aab when the keystore secrets exist.
+#
+# Trigger: Actions tab -> "Run workflow", or push a tag like v1.0.0.
+# Live preview: https://forgequeue.8rec.com-style credits are not required here.
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web bundle (static export)
+        run: npm run build
+        env:
+          CAPACITOR_BUILD: "1"
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Release AAB (only if a keystore is configured)
+        if: ${{ env.ANDROID_KEYSTORE_BASE64 != '' }}
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          cd android
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > app/release.keystore
+          ./gradlew bundleRelease --no-daemon \
+            -Pandroid.injected.signing.store.file="$PWD/app/release.keystore" \
+            -Pandroid.injected.signing.store.password="${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" \
+            -Pandroid.injected.signing.key.alias="${{ secrets.ANDROID_KEY_ALIAS }}" \
+            -Pandroid.injected.signing.key.password="${{ secrets.ANDROID_KEY_PASSWORD }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: |
+            site/android/app/build/outputs/apk/debug/*.apk
+            site/android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: warn
+
+  ios:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web bundle (static export)
+        run: npm run build
+        env:
+          CAPACITOR_BUILD: "1"
+
+      - name: Sync Capacitor
+        run: npx cap sync ios
+
+      - name: Build unsigned app
+        run: |
+          cd ios/App
+          xcodebuild -project App.xcodeproj \
+            -scheme App \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      # ------------------------------------------------------------------------
+      # To produce a signed .ipa you additionally need, as repository secrets:
+      #   APPLE_CERTIFICATE_BASE64   (.p12, exported from Keychain)
+      #   APPLE_CERTIFICATE_PASSWORD
+      #   APPLE_PROVISIONING_PROFILE  (base64 .mobileprovision)
+      #   APPLE_TEAM_ID, APPLE_KEYCHAIN_PASSWORD
+      # Then replace this job's build step with `xcodebuild archive` +
+      # `-exportArchive -exportOptionsPlist ExportOptions.plist`. Apple still reviews
+      # every submission; no CI service removes that step or the $99/year fee.
+      # ------------------------------------------------------------------------
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-simulator-app
+          path: site/ios/App/build/Build/Products/Debug-iphonesimulator/App.app
+          if-no-files-found: warn
