@@ -3,6 +3,8 @@
 Source: `jusnie/Tools-Skills`, branch `arena/6265089e-animation`, path `.claude/`.
 **11 web-development skills + 4 subagents · 2,111 files · 34 MB payload (~39 MB on disk; 2,111 small files) · sparse clone, so you never pull the repo's 162 MB.**
 
+It also wires in the **88-style design catalog** (glassmorphism, brutalism, bento, Y2K, HUD, liquid glass, editorial…) and a **verified scroll/motion toolkit** (Lenis 1.3.27, GSAP 3.15.1, 17 GSAP presets).
+
 Paste the block in **Part A** into your friend's AI (Claude Code, Cursor, or anything with shell access). It asks one question — project-level or user-level — then installs and verifies.
 
 ---
@@ -75,6 +77,45 @@ STEP 6 — report, in this format:
   | Skill | Version | License | Purpose (one line) | Files |
   plus one line: "Invoke with: <how to trigger a skill in my tool>"
 
+STEP 7 — after installing, prove one skill works: open
+  <TARGET>/.claude/skills/design-taste-frontend/SKILL.md
+Its `description:` is a YAML folded block (the line after `description: >-`), so quote the
+first sentence of that text — it begins "tasteskill 2.5.1" — back to me.
+
+STEP 8 — register the two local references you just installed, and use them instead of guessing:
+
+  A) DESIGN STYLES — .claude/skills/ui-ux-pro-max/data/styles.csv
+     88 styles: 50 active, 29 supplemental, 9 deprecated. Columns that matter:
+     Style Category, Status, Keywords, Best For, Do Not Use For, Effects & Animation,
+     Accessibility, Performance, Implementation Checklist, CSS/Technical Keywords.
+     When I name a style (glassmorphism, brutalism, bento, Y2K, HUD, liquid glass,
+     editorial, claymorphism, kinetic typography, etc.), grep this CSV first and follow
+     its CSS/Technical Keywords and Implementation Checklist verbatim. Never invent a
+     style's rules. Skip anything whose Status is deprecated.
+
+  B) MOTION PRESETS — .claude/skills/ui-ux-pro-max/data/motion.csv
+     17 presets (hover, scroll reveal, stagger, page transition, parallax, loading,
+     carousel), each with Trigger / Duration / Easing / GSAP Snippet / Do / Don't.
+     Use its snippet and timings for reveals and transitions instead of inventing them.
+
+  C) Where each skill wins: design-taste-frontend = the anti-slop floor and finish gate;
+     ui-ux-pro-max = the style/palette/typography/motion data; hallmark = avoid model
+     defaults; scroll-craft = full scroll-driven landing pages; modern-web-guidance =
+     platform API correctness; frontend-checklist = the audit pass.
+
+MOTION DEPENDENCY POLICY
+  - Ask me before adding any scroll or animation package, and state the exact version.
+    Verified latest as of 2026-11-14: lenis 1.3.27, gsap 3.15.1, @gsap/react 2.1.2,
+    motion 14.14.0, split-type 0.3.4, animejs 4.5.0, embla-carousel-react 8.6.0,
+    swiper 14.4.0, @barba/core 2.10.3, swup 4.10.0, locomotive-scroll 5.1.1,
+    rellax 1.12.1, atropos 2.0.2, three 0.187.0, @react-three/fiber 9.8.2,
+    tailwindcss 4.3.5.
+  - Never install @studio-freight/lenis — deprecated and renamed; the package is `lenis`.
+  - Never run two smooth-scroll engines at once (Lenis + locomotive-scroll, or Lenis +
+    CSS `scroll-behavior: smooth`). Pick one.
+  - Lenis honors prefers-reduced-motion by default (respectReducedMotion defaults to
+    true). Do not set it to false.
+
 RULES
   - These skills are third-party MIT / Apache-2.0 works. Keep their LICENSE files and do
     not strip attribution. Do not relicense them as your own.
@@ -84,10 +125,6 @@ RULES
   - Do not delete or rewrite anything in <TARGET> outside .claude/.
   - If the clone or sparse-checkout fails twice, stop and report the exact error.
 
-STEP 7 — after installing, prove one skill works: open
-  <TARGET>/.claude/skills/design-taste-frontend/SKILL.md
-Its `description:` is a YAML folded block (the line after `description: >-`), so quote the
-first sentence of that text — it begins "tasteskill 2.5.1" — back to me.
 ````
 
 ---
@@ -137,10 +174,141 @@ Excluding these is what keeps the install at a 34 MB payload instead of 96 MB.
 
 ---
 
-## Part C — notes
+## Part C — Design styles (the "glassmorphism etc" list)
+
+Nothing to install — this already ships as **data** inside `ui-ux-pro-max`, so the AI greps it instead of recalling it:
+
+`.claude/skills/ui-ux-pro-max/data/styles.csv` — **88 styles · 50 active · 29 supplemental · 9 deprecated**
+
+Each row carries `Keywords`, `Primary/Secondary Colors`, `Effects & Animation`, `Best For`, `Do Not Use For`, `Light Mode ✓`, `Dark Mode ✓`, `Performance`, `Accessibility`, `Mobile-Friendly`, `Conversion-Focused`, `Framework Compatibility`, `Era/Origin`, `Complexity`, `CSS/Technical Keywords`, `Implementation Checklist`, `Design System Variables`.
+
+### Query it offline
+
+```bash
+# one style with all its rules
+grep -i "glassmorph" .claude/skills/ui-ux-pro-max/data/styles.csv
+
+# the active shortlist
+python3 -c "
+import csv
+for r in csv.DictReader(open('.claude/skills/ui-ux-pro-max/data/styles.csv')):
+    if r['Status']=='active': print(r['Style Category'])
+"
+```
+
+### The 50 active styles, grouped by intent
+
+| Intent | Styles |
+|---|---|
+| **Neutral / product UI** | Minimalism & Swiss Style · Flat Design · Bento Box Grid · Dimensional Layering · Exaggerated Minimalism · Editorial Grid / Magazine · Dark Mode (OLED) |
+| **Material & depth** | Glassmorphism · Liquid Glass · Neumorphism · Soft UI Evolution · Claymorphism · Skeuomorphism · Tactile Digital / Deformable UI · E-Ink / Paper · 3D & Hyperrealism · 3D Product Preview |
+| **Bold / anti-design** | Brutalism · Neubrutalism · Vibrant & Block-based · Gen Z Chaos / Maximalism · Anti-Polish / Raw Aesthetic · Memphis Design · Bauhaus |
+| **Retro & nostalgia** | Retro-Futurism · Y2K Aesthetic · Vintage Analog / Retro Film · Pixel Art |
+| **Tech & sci-fi** | Cyberpunk UI · HUD / Sci-Fi FUI · Aurora UI · AI-Native UI · Spatial UI (VisionOS) · Interactive Cursor Design |
+| **Calm & organic** | Organic Biophilic · Biomimetic / Organic 2.0 · Nature Distilled · Accessible & Ethical · Inclusive Design |
+| **Motion-led** | Motion-Driven · Micro-interactions · Kinetic Typography · Parallax Storytelling |
+| **Data & dashboards** | Data-Dense Dashboard (+ 9 supplemental dashboard variants) |
+| **Off-the-shelf systems** | Fluent 2 · Shopify Polaris · Adobe Spectrum · Material 3 Expressive (Mobile) |
+| **Interface-less** | Zero Interface · Voice-First Multimodal |
+
+### The 29 supplemental — real but narrow
+
+Mostly mobile variants, dashboard archetypes and niche eras: Vaporwave · Swiss Modernism 2.0 · Minimalist Monochrome · Modern Dark (Cinema Mobile) · Terminal CLI (Mobile) · Gradient Mesh / Aurora Evolved · Chromatic Aberration / RGB Split · Academia (Scholarly Mobile) · Sketch Hand-Drawn (Mobile) · Bold Typography (Mobile Poster) · Kinetic Brutalism (Mobile) · Cyberpunk Mobile HUD · Neo Brutalism (Mobile) · Flat Design Mobile (Touch-First) · Claymorphism (Mobile) · Neumorphism (Mobile) · SaaS Mobile (High-Tech Boutique) · Enterprise SaaS (Mobile) · Bitcoin DeFi (Mobile) · Spectrum 2 · Heat Map · Executive Dashboard · Real-Time Monitoring · Drill-Down Analytics · Comparative Analysis Dashboard · Predictive Analytics · User Behavior Analytics · Financial Dashboard · Sales Intelligence Dashboard
+
+### The 9 deprecated — don't build these
+
+`Hero-Centric Design` · `Conversion-Optimized` · `Feature-Rich Showcase` · `Minimal & Direct` · `Social Proof-Focused` · `Interactive Product Demo` · `Trust & Authority` · `Storytelling-Driven` · `Bento Grids (Legacy)`
+
+The portfolio I audited earlier is squarely **Hero-Centric Design** — the style this dataset itself retired. That's the file talking, not me.
+
+### Worked example — glassmorphism, verbatim from the CSV
+
+**CSS keywords:** `backdrop-filter: blur(15px)` · `background: rgba(255,255,255,.15)` · `border: 1px solid rgba(255,255,255,.2)` · `-webkit-backdrop-filter: blur(15px)` · z-index layering for depth
+
+**Checklist:** ☐ blur 10–20px ☐ translucent white 15–30% ☐ 1px light border ☐ vibrant background verified ☐ text contrast 4.5:1
+
+**Acceptance:** `accessibility: risk:conditional | requires: contrast-text-4.5, keyboard, visible-focus, reduced-motion` · `performance: cost:low`
+
+The gotcha that checklist implies: **glass over a flat background is invisible** — it needs colour behind it, and it needs a fallback when `backdrop-filter` is unsupported.
+
+```css
+.glass{
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.2);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+@supports not (backdrop-filter: blur(1px)){
+  .glass{ background: rgba(20,24,36,.92) }  /* opaque fallback holds 4.5:1 */
+}
+```
+
+---
+
+## Part D — Scroll & motion toolkit (Lenis etc.)
+
+Full scroll-page work comes from three places: the **scroll-craft** skill (journey, page grammar, layered hero), **react-kino** (React scroll stories), and the packages below. Versions checked against `registry.npmjs.org` on **2026-11-14**.
+
+| Package | Latest | Use it for |
+|---|---|---|
+| **lenis** | 1.3.27 | Smooth scroll that preserves native scroll semantics |
+| **gsap** | 3.15.1 | Timelines + ScrollTrigger |
+| **@gsap/react** | 2.1.2 | `useGSAP()` with proper cleanup |
+| **motion** | 14.14.0 | React springs + layout animation (Framer Motion successor) |
+| **split-type** | 0.3.4 | Split text/lines/chars for reveals |
+| **animejs** | 4.5.0 | Small standalone timeline, no framework |
+| **embla-carousel-react** | 8.6.0 | Carousels that don't fight scroll |
+| **swiper** | 14.4.0 | Full-featured slider |
+| **@barba/core** | 2.10.3 | Page transitions (multi-page) |
+| **swup** | 4.10.0 | Lighter MPA page transitions |
+| **locomotive-scroll** | 5.1.1 | Alternative smooth scroll — don't mix with Lenis |
+| **rellax** | 1.12.1 | Tiny parallax |
+| **atropos** | 2.0.2 | 3D tilt cards |
+| **three** / **@react-three/fiber** | 0.187.0 / 9.8.2 | WebGL scenes |
+| **tailwindcss** | 4.3.5 | Styling |
+
+⚠️ **`@studio-freight/lenis` is deprecated** (last version 1.0.42) — renamed to **`lenis`**. Most tutorials still tell you to install the old name.
+
+### Lenis — quickstart verified from the 1.3.27 tarball
+
+```bash
+npm i lenis
+```
+```js
+import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'          // ships in the package
+
+const lenis = new Lenis()              // respectReducedMotion defaults to true
+function raf(time){ lenis.raf(time); requestAnimationFrame(raf) }
+requestAnimationFrame(raf)
+```
+
+React: `import { ReactLenis } from 'lenis/react'`. Package exports: `.` · `./react` · `./snap` · `./vue` · `./nuxt`.
+
+**GSAP ScrollTrigger sync** — the documented three lines:
+```js
+lenis.on('scroll', ScrollTrigger.update)
+gsap.ticker.add((time) => { lenis.raf(time * 1000) })   // seconds → ms
+gsap.ticker.lagSmoothing(0)
+```
+
+**Reduced motion is already handled.** Lenis forces `lerp` to 1, makes `scrollTo`/anchor jumps instant, and reacts live without a reload; read `lenis.prefersReducedMotion` to adapt your own animations. Opting out via `respectReducedMotion: false` is not recommended.
+
+**Native behaviour survives** — Lenis wraps the browser's own scroll, so `position: sticky` and anchor links keep working. Put `data-lenis-prevent` on modals and nested scroll areas. Never also set `scroll-behavior: smooth` in CSS; the two fight.
+
+### Scroll-page recipes → `motion.csv`
+
+17 presets with real GSAP snippets: **hover micro-interaction ×3 · scroll reveal ×3 · stagger list ×3 · page transition ×3 · parallax ×2 · loading/skeleton ×2 · carousel ×1**. Every row gives Trigger / Duration / Easing / Snippet / Do / Don't — use those timings instead of inventing "0.3s ease-in-out" and hoping.
+
+For a whole cinematic landing page, **scroll-craft** plans the journey and builds the layered hero; Lenis is the engine underneath it.
+
+---
+
+## Part E — notes
 
 - **Scope.** Project-level (`./.claude`) keeps it per-repo; user-level (`~/.claude`) makes every project see it. Claude Code reads both; `.agents/skills/` is the alternative path some tools use.
 - **No `node_modules`, no build step.** Skills are Markdown + static assets + two `.mjs` checkers. Nothing to compile.
 - **The gate is the good part.** `design-taste-frontend/scripts/gate.mjs` is a real browser checker — it's what turns "looks generic" into a pass/fail. Node 18+ to use it.
 - **Licenses travel with the files.** MIT for design-taste, hallmark, ui-ux-pro-max, frontend-checklist, scroll-craft, react-kino, oil-motion, mapcn; Apache-2.0 for impeccable, modern-web-guidance, ui-sdk. Keep the `LICENSE*` files when redistributing — the installer instructs the AI to preserve them.
+- **Verified 2026-11-14:** npm versions from `registry.npmjs.org`; Lenis API/CSS/exports read from the `lenis-1.3.27.tgz` tarball; the style catalog read from `styles.csv` (88 rows, catalog verified 2026-08-13).
 - **Runtime:** 34 MB payload / ~39 MB on disk · 2,111 files · sparse clone of one branch. First clone pulls only those paths (`--filter=blob:none --sparse`), not the repo's 162 MB of renders.
